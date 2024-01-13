@@ -8,14 +8,13 @@ description = "An simple API Wrapper for bot-hosting.net"
 readme = "README.md"
 requires-python = ">=3.8"
 classifiers = [
-    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
-
-[project.urls]
-Homepage = "https://github.com/vortexsys/bot-hosting-wrapper"
-Issues = "https://github.com/vortexsys/bot-hosting-wrapper/issues"
+homepage = "https://github.com/vortexsys/bot-hosting-wrapper"
+license = "MIT"
+keywords = ["api wrapper", "bot-hosting.net"]
 
 [build-system]
 requires = ["setuptools>=61.0"]
