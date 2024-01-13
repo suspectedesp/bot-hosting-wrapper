@@ -84,7 +84,7 @@ def get_server_info(auth_id):
                 print(f"Ram: {ram} MB")
                 print(f"CPU: {cpu}%")
                 print(f"Next Renewal: {renewal_date}")
-                input()
+                input("Press enter to continue")
             else:
                 print("Error: Could not extract numeric values from nextRenewal")
         else:
@@ -109,7 +109,7 @@ def show_servers(auth_id):
         print("Request successful!")
         print("Response:")
         print(response.json())
-        input("")
+        input("Press enter to continue")
     else:
         print(f"Error: {response.status_code}")
         print("Response:")
@@ -127,7 +127,7 @@ def show_coins(auth_id):
         print("Request successful!")
         coins_amount = response.json().get('coins')
         print("Your current coins amount:", coins_amount)
-        input()
+        input("Press enter to continue")
     else:
         print(f"Error: {response.status_code}")
         print("Response:")
@@ -147,7 +147,7 @@ def about_account(auth_id):
         print("Username: ", user_info['username'], " | ID: ", user_info['id'])
         print("Current coins amount:", user_info['coins'])
         print("Avatar:", user_info['avatar'])
-        input()
+        input("Press enter to continue")
     else:
         print(f"Error: {response.status_code}")
         print("Response:")

@@ -1,6 +1,6 @@
 [project]
-name = "bot-hosting-wrapper_vortexsys"
-version = "0.0.1"
+name = "bot_hosting_wrapper_vortexsys"
+version = "0.0.2"
 authors = [
   { name="Vortex", email="vrtx.supp0rt@gmail.com" },
 ]
@@ -12,9 +12,9 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
+
+[project.urls]
 homepage = "https://github.com/vortexsys/bot-hosting-wrapper"
-license = "MIT"
-keywords = ["api wrapper", "bot-hosting.net"]
 
 [build-system]
 requires = ["setuptools>=61.0"]
