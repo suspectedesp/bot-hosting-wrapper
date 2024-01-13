@@ -15,21 +15,26 @@ Dependencies :
 
 ## Usage
 ### Servers Information
-```from bot_hosting_wrapper_vortexsys import show_servers
+```
+from bot_hosting_wrapper_vortexsys import show_servers
 
 auth_key = "your_authorization_key"
 show_servers(auth_key)
+```
 ### Specific Server Information
-```from bot_hosting_wrapper_vortexsys import show_servers
+```
+from bot_hosting_wrapper_vortexsys import show_servers
 
 auth_key = "your_authorization_key"
 get_server_info(auth_key)
+```
 ### Account Information
-```from bot_hosting_wrapper_vortexsys import about_account
+```
+from bot_hosting_wrapper_vortexsys import about_account
 
 auth_key = "your_authorization_key"
 about_account(auth_key)
-
+```
 ## License
 MIT License
 
