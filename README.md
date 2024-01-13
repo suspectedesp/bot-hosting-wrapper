@@ -1,5 +1,6 @@
 # Bot-Hosting.net API Wrapper
-
+A Simple API Wrapper for certain information in python for bot-hosting.net
+Information: This is made by @vortexsys on discord, staff member but not developer of bot-hosting.net
 ## Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
@@ -14,6 +15,17 @@ Dependencies :
 - datetime
 
 ## Usage
+### How to get the Authorization key
+Please follow the instructions to get your auth id:
+- Login to your account and go to [this page](https://bot-hosting.net/panel/)
+- Open your browser's console (usually by pressing F12 or pressing Control + Shift + I)
+- Navigate to the 'Console' tab
+- Paste in the following code:
+
+var token = localStorage.getItem('token');
+console.log('Your Auth ID:', token);
+
+Now you got your Auth ID and can use all the scripts, congrats!
 ### Servers Information
 ```
 from bot_hosting_wrapper import show_servers
