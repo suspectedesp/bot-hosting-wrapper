@@ -1,10 +1,10 @@
 [project]
-name = "example_package_YOUR_USERNAME_HERE"
+name = "bot-hosting-wrapper_vortexsys"
 version = "0.0.1"
 authors = [
-  { name="Example Author", email="author@example.com" },
+  { name="Vortex", email="vrtx.supp0rt@gmail.com" },
 ]
-description = "A small example package"
+description = "An simple API Wrapper for bot-hosting.net"
 readme = "README.md"
 requires-python = ">=3.8"
 classifiers = [
@@ -14,8 +14,8 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/pypa/sampleproject"
-Issues = "https://github.com/pypa/sampleproject/issues"
+Homepage = "https://github.com/vortexsys/bot-hosting-wrapper"
+Issues = "https://github.com/vortexsys/bot-hosting-wrapper/issues"
 
 [build-system]
 requires = ["setuptools>=61.0"]
