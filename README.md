@@ -21,10 +21,10 @@ Please follow the instructions to get your auth id:
 - Open your browser's console (usually by pressing F12 or pressing Control + Shift + I)
 - Navigate to the 'Console' tab
 - Paste in the following code:
-
+```
 var token = localStorage.getItem('token');
 console.log('Your Auth ID:', token);
-
+```
 Now you got your Auth ID and can use all the scripts, congrats!
 ### Servers Information
 ```
