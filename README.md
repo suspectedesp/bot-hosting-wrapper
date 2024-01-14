@@ -1,5 +1,5 @@
 # Bot-Hosting.net API Wrapper
-A Simple API Wrapper for certain information in python for bot-hosting.net
+A simple API Wrapper for certain information in python for bot-hosting.net
 Information: This is made by @vortexsys on discord, staff member but not developer of bot-hosting.net
 ## Table of Contents
 - [Installation](#installation)
@@ -27,6 +27,7 @@ console.log('Your Auth ID:', token);
 ```
 Now you got your Auth ID and can use all the scripts, congrats!
 ### Servers Information
+Show all Servers and some Information about them:
 ```
 from bot_hosting_wrapper import show_servers
 
@@ -34,18 +35,33 @@ auth_key = "your_authorization_key"
 show_servers(auth_key)
 ```
 ### Specific Server Information
+View general information about a Server:
 ```
-from bot_hosting_wrapper import show_servers
+from bot_hosting_wrapper import get_server_info
 
 auth_key = "your_authorization_key"
 get_server_info(auth_key)
 ```
+Change your server's Coding Language:
+```
+from bot_hosting_wrapper import change_language
+
+auth_key = "your_authorization_key"
+change_language(auth_key)
+```
 ### Account Information
+Getting genuine Account Information:
 ```
 from bot_hosting_wrapper import about_account
 
 auth_key = "your_authorization_key"
 about_account(auth_key)
+```
+Getting your current coins amount:
+```
+from bot_hosting_wrapper import coins_amount
+auth_key = "your_authorization_key"
+coins_amount(auth_key)
 ```
 ## License
 MIT License

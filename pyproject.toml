@@ -1,10 +1,10 @@
 [project]
 name = "bot_hosting_wrapper"
-version = "1.0.2"
+version = "1.0.3"
 authors = [
   { name="Vortex", email="vrtx.supp0rt@gmail.com" },
 ]
-description = "An simple API Wrapper for bot-hosting.net"
+description = "A simple API Wrapper for bot-hosting.net"
 readme = "README.md"
 requires-python = ">=3.8"
 classifiers = [
