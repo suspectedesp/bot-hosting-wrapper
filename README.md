@@ -1,4 +1,6 @@
 # Bot-Hosting.net API Wrapper
+Important: Your account token expires every 2 weeks! If something isnt working, make sure you use an up-to-date token :)
+
 A simple API Wrapper for certain information in python for bot-hosting.net
 Information: This is made by @vortexsys on discord, staff member but not developer of bot-hosting.net
 ## Table of Contents
