@@ -136,12 +136,16 @@ def about_account(auth_id):
     response = requests.get(url, headers=headers)
 
     if response.status_code == 200:
-        user_info = response.json()
-        print("Request successful!")
-        print("Username: ", user_info['username'], " | ID: ", user_info['id'])
-        print("Current coins amount:", user_info['coins'])
-        print("Avatar:", user_info['avatar'])
-        input("Press enter to continue")
+        try:
+            user_info = response.json()
+            print("Sent Request!")
+            print("Username: ", user_info['username'], " | ID: ", user_info['id'])
+            print("Current coins amount:", user_info['coins'])
+            print("Avatar:", user_info['avatar'])
+            input("Press enter to continue")
+        except Exception as e:
+            print(f"Error parsing response JSON: {e}")
+            print("auth_id invalid")
     else:
         print(f"Error: {response.status_code}")
         print("Response:")
@@ -168,7 +172,7 @@ def coins_amount(auth_id):
 def cls():
     print("\033c")
 
-def change_language(auth_id):
+def change_language(auth_id, language=None):
     url_list = "https://bot-hosting.net/api/servers"
     headers_list = {
         "Authorization": auth_id
@@ -192,6 +196,12 @@ def change_language(auth_id):
             selected_server_id = str(server_list[selection - 1]['serverid'])
         except ValueError:
             selected_server_id = selection_input
+
+        if language is None:
+            programming_language = input("Enter the programming language (java, python, nodejs, lua, deno, nodemon): ")
+        else:
+            programming_language = language
+
         language_to_egg = {
             "java": 18,
             "python": 17,
@@ -200,8 +210,6 @@ def change_language(auth_id):
             "deno": 19,
             "nodemon": 20
         }
-
-        programming_language = input("Enter the programming language (java, python, nodejs, lua, deno, nodemon): ")
 
         egg = language_to_egg.get(programming_language.lower(), "Unknown Language")
         print(f"Selected server ID: {selected_server_id}, Programming Language: {programming_language}, Egg: {egg}")
@@ -222,3 +230,25 @@ def change_language(auth_id):
         else:
             print(f"Failed to change software. Status code: {response_change_software.status_code}")
             print(response_change_software.text)
+
+def id_check(auth_id):
+    url = "https://bot-hosting.net/api/me"
+    headers = {
+        "Authorization": auth_id
+    }
+
+    response = requests.get(url, headers=headers)
+
+    if response.status_code == 200:
+        try:
+            user_info = response.json()
+            print("Sent Request!")
+            print("Username: ", user_info['username'], " | ID: ", user_info['id'])
+            print("Current coins amount:", user_info['coins'])
+            print("Avatar:", user_info['avatar'])
+            input("Press enter to continue")
+        except Exception as e:
+            print(f"Error parsing response JSON: {e}")
+            print("Auth ID invalid.")
+    else:
+        print("Auth_id is not valid. Please check your authentication credentials.")

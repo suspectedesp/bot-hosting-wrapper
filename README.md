@@ -6,9 +6,9 @@ Information: This is made by @vortexsys on discord, staff member but not develop
 ## Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
-- [Configuration](#configuration)
-- [Contribution](#contributing)
+- [Change Log](#changelog)
 - [License](#license)
+- [Contribution](#contributing)
 
 ## Installation
 Dependencies :
@@ -50,6 +50,8 @@ from bot_hosting_wrapper import change_language
 
 auth_key = "your_authorization_key"
 change_language(auth_key)
+//Optionally like this (already including the new coding language)
+//change_language(auth_id, language="example") //options: java, python, nodejs, lua, deno, nodemon
 ```
 ### Account Information
 Getting genuine Account Information:
@@ -59,12 +61,23 @@ from bot_hosting_wrapper import about_account
 auth_key = "your_authorization_key"
 about_account(auth_key)
 ```
+Checking if AUTH ID is valid:
+```
+from bot_hosting_wrapper import id_check 
+
+auth_key = "your-authorization_key"
+id_check(auth_key)
+```
 Getting your current coins amount:
 ```
 from bot_hosting_wrapper import coins_amount
 auth_key = "your_authorization_key"
 coins_amount(auth_key)
 ```
+## Changelog
+- Updated Usage (added id_check, optimised about_account, etc.)
+- Tested for optimisation
+- Updated/fixed the README file
 ## License
 MIT License
 

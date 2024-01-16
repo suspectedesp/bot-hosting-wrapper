@@ -1,6 +1,6 @@
 [project]
 name = "bot_hosting_wrapper"
-version = "1.0.3"
+version = "1.0.4"
 authors = [
   { name="Vortex", email="vrtx.supp0rt@gmail.com" },
 ]
