@@ -137,7 +137,6 @@ class Server:
                 programming_language = input("Enter the programming language (java, python, nodejs, lua, deno, nodemon): ")
             else:
                 programming_language = language
-
             language_to_egg = {
                 "java": 18,
                 "python": 17,
