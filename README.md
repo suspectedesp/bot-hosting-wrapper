@@ -1,14 +1,18 @@
-# Bot-Hosting.net API Wrapper
+# Bot-Hosting.net API Wrapper | Information
 Important: Your account token expires every 2 weeks! If something isnt working, make sure you use an up-to-date token :)
 
-A simple API Wrapper for certain information in python for bot-hosting.net
-Information: This is made by @vortexsys on discord, staff member but not developer of bot-hosting.net
+A simple API Wrapper for certain informatio in python for bot-hosting.net
+
+This is made by @vortexsys on discord, staff member but not developer of bot-hosting.net
+
+https://github.com/iamkubi/pydactyl Made possible by this guy!
 ## Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
 - [Change Log](#changelog)
 - [License](#license)
 - [Contribution](#contributing)
+- [Credits](#credits)
 
 ## Installation
 Dependencies :
@@ -28,54 +32,11 @@ var token = localStorage.getItem('token');
 console.log('Your Auth ID:', token);
 ```
 Now you got your Auth ID and can use all the scripts, congrats!
-### Servers Information
-Show all Servers and some Information about them:
-```
-from bot_hosting_wrapper import show_servers
 
-auth_key = "your_authorization_key"
-show_servers(auth_key)
-```
-### Specific Server Information
-View general information about a Server:
-```
-from bot_hosting_wrapper import get_server_info
-
-auth_key = "your_authorization_key"
-get_server_info(auth_key)
-```
-Change your server's Coding Language:
-```
-from bot_hosting_wrapper import change_language
-
-auth_key = "your_authorization_key"
-change_language(auth_key)
-//Optionally like this (already including the new coding language)
-//change_language(auth_id, language="example") //options: java, python, nodejs, lua, deno, nodemon
-```
-### Account Information
-Getting genuine Account Information:
-```
-from bot_hosting_wrapper import about_account
-
-auth_key = "your_authorization_key"
-about_account(auth_key)
-```
-Checking if AUTH ID is valid:
-```
-from bot_hosting_wrapper import id_check 
-
-auth_key = "your-authorization_key"
-id_check(auth_key)
-```
-Getting your current coins amount:
-```
-from bot_hosting_wrapper import coins_amount
-auth_key = "your_authorization_key"
-coins_amount(auth_key)
-```
+For an usage of the commands etc. please go [here](https://github.com/vortexsys/bot-hosting-wrapper/wiki/Coding-Usage)
 ## Changelog
-- Updated Usage (added id_check, optimised about_account, etc.)
+Latest Changelog:
+- Updated the way of how it is used
 - Tested for optimisation
 - Updated/fixed the README file
 ## License
@@ -108,3 +69,10 @@ SOFTWARE.
 - Commit your changes: git commit -am 'Add my feature'.
 - Push to the branch: git push origin feature/my-feature.
 - Submit a pull request.
+
+## Credits
+Many thanks to:
+- @MathiasDPX for giving me some ideas and remaking the code
+- @Pondwader for letting me upload this
+- @iamkubi for making pydactyl (api wrapper for pterodactyl panel)
+Many thanks guys! I appreciate it <3

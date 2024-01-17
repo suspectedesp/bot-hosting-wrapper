@@ -153,3 +153,5 @@ cython_debug/
 bot-hosting-wrapper.code-workspace
 tests/test.py
 tests/about.py
+testing/about.py
+testing/test.py
