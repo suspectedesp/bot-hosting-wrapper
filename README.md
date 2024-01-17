@@ -34,6 +34,7 @@ console.log('Your Auth ID:', token);
 Now you got your Auth ID and can use all the scripts, congrats!
 
 For an usage of the commands etc. please go [here](https://github.com/vortexsys/bot-hosting-wrapper/wiki/Coding-Usage)
+
 ## Changelog
 Latest Changelog:
 - Updated the way of how it is used
