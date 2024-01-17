@@ -92,11 +92,11 @@ console.log('Your Auth ID:', token);
         else:
             print("Auth_id is not valid. Please check your authentication credentials.")
     
-    def sql_pass(self):
+    def sftp_pass(self):
         i = input("Information: This resets your old one, are you sure? (yes/no)")
         if i == "yes":
             passwd = requests.post(urls["newPassword"], headers=self._headers).json()["password"]
-            return passwd
+            input(f"New Password: {passwd}  | Press Enter to continue")
         elif i == "no":
             print("Exiting then!")
             time.sleep(0.)
@@ -149,7 +149,7 @@ class Server:
 
             egg = language_to_egg.get(programming_language.lower(), "Unknown Language")
             print(f"Selected server ID: {selected_server_id}, Programming Language: {programming_language}, Egg: {egg}")
-            change_software_url = f"{urls["servers"]}/changeSoftware"
+            change_software_url = f"{urls['servers']}/changeSoftware"
             headers_change_software = {
                 "Authorization": self.auth_id,
                 "Content-Type": "application/json"
@@ -195,7 +195,7 @@ class Server:
             except ValueError:
                 selected_server_id = selection_input
 
-            url_details = f"{urls["servers"]}/{selected_server_id}"
+            url_details = f"{urls['servers']}/{selected_server_id}"
             headers_details = {
                 "Authorization": self.auth_id
             }
