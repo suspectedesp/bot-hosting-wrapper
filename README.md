@@ -1,7 +1,7 @@
 # Bot-Hosting.net API Wrapper | Information
-Important: Your account token expires every 2 weeks! If something isnt working, make sure you use an up-to-date token :)
+Important: Your account token expires every 2 weeks! If something isnt working, make sure you use an up-to-date Auth ID :)
 
-A simple API Wrapper for certain informatio in python for bot-hosting.net
+A simple API Wrapper for certain information in python for bot-hosting.net
 
 This is made by @vortexsys on discord, staff member but not developer of bot-hosting.net
 
@@ -37,9 +37,10 @@ For an usage of the commands etc. please go [here](https://github.com/vortexsys/
 
 ## Changelog
 Latest Changelog:
-- Updated the way of how it is used
-- Tested for optimisation
-- Updated/fixed the README file
+- Added function descriptions
+- Tested for optimization as always
+- Fixed the README file once again
+
 ## License
 MIT License
 
@@ -73,8 +74,8 @@ SOFTWARE.
 
 ## Credits
 Many thanks to:
-- @MathiasDPX for giving me some ideas and remaking the code
-- @Pondwader for letting me upload this
+- @mathiasDPX for giving me some ideas and remaking the code
+- @pondwader for letting me upload this
 - @iamkubi for making pydactyl (api wrapper for pterodactyl panel)
 
 Many thanks guys! I appreciate it <3

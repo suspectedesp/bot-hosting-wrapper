@@ -277,9 +277,10 @@ class Server:
             print("Response:")
             print(response.text)
 
-    def delete(self):
+    def delete(self, server_id=None):
         """
         This function gets all your server ids and on your request deletes a certain one (only with your confirmation)
+        If server_id is provided, deletes that server directly; otherwise, prompts user for server selection.
         """
         url_list = "https://bot-hosting.net/api/servers"
 
@@ -287,28 +288,30 @@ class Server:
 
         if response_list.status_code == 200:
             server_list = response_list.json()
-            print("Available Servers:")
 
-            for index, server_info in enumerate(server_list, start=1):
-                print(f"{index}. Server ID: {server_info['serverid']}, Name: {server_info['name']}")
+            if server_id is None:
+                print("Available Servers:")
+                for index, server_info in enumerate(server_list, start=1):
+                    print(f"{index}. Server ID: {server_info['serverid']}, Name: {server_info['name']}")
 
-            print("Select your server ID or list number: ")
-            selection_input = input("[>]")
-            self.cls()
+                print("Select your server ID or list number: ")
+                selection_input = input("[>]")
+                self.cls()
 
-            try:
-                selection = int(selection_input)
-                selected_server_id = str(server_list[selection - 1]['serverid'])
-                
+                try:
+                    selection = int(selection_input)
+                    selected_server_id = str(server_list[selection - 1]['serverid'])
+                except (ValueError, IndexError):
+                    print("Invalid selection. Please choose a valid server.")
+                    return
+            else:
+                selected_server_id = str(server_id)
 
-                url_delete = "https://bot-hosting.net/api/servers/delete"
+            url_delete = "https://bot-hosting.net/api/servers/delete"
 
-                data = {
-                    "id": int(selected_server_id)
-                }
+            data = {
+                "id": int(selected_server_id)
+            }
 
-                r = requests.post(url_delete, json=data, headers=self._headers)
-                print(r.content)
-
-            except (ValueError, IndexError):
-                print("Invalid selection. Please choose a valid server.")
+            r = requests.post(url_delete, json=data, headers=self._headers)
+            print(r.content)
