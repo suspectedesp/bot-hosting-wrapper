@@ -112,10 +112,8 @@ class Server:
             os.system('cls')
         else:
             os.system('clear')
-            
+
     def change_language(self, language=None):
-        def cls():
-            print("\033c")
         url_list = "https://bot-hosting.net/api/servers"
         headers_list = {
             "Authorization": self.auth_id
@@ -132,7 +130,7 @@ class Server:
 
             print("Select your server ID or list number: ")
             selection_input = input("[>]")
-            cls()
+            self.cls()
 
             try:
                 selection = int(selection_input)
@@ -174,8 +172,6 @@ class Server:
                 print(response_change_software.text)
 
     def get_info(self):
-        def cls():
-            print("\033c")
 
         url_list = "https://bot-hosting.net/api/servers"
         headers_list = {
@@ -193,7 +189,7 @@ class Server:
 
             print("Select your server ID or list number: ")
             selection_input = input("[>]")
-            cls()
+            self.cls()
 
             try:
                 selection = int(selection_input)
