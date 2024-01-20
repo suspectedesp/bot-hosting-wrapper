@@ -14,8 +14,8 @@ classifiers = [
 ]
 
 [project.urls]
-homepage = "https://github.com/vortexsys/bot-hosting-wrapper"
-Github Page = "https://github.com/vortexsys/bot-hosting-wrapper"
+Homepage = "https://vortexsys.github.io/bhw-site/"
+Repository = "https://github.com/vortexsys/bot-hosting-wrapper"
 
 [tool.poetry.dependencies]
 python = "^3.8"
