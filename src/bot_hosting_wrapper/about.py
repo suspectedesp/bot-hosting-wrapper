@@ -14,8 +14,14 @@ urls = {
 class Account:
     def __init__(self, auth_id):
         self.auth_id = auth_id
+        self._headers = {
+        "Authorization": self.auth_id,
+        "content-type": "application/json"
+        }
 
     def get_auth_id():
+        """A quick instruction on how to get the auth id
+        """
         print(Fore.WHITE + "Please follow the instructions to get your auth id.")
         print("1. Open your browser's console (usually by pressing F12 or pressing Control + Shift + I)")
         print("2. Navigate to the 'Console' tab")
@@ -30,12 +36,12 @@ console.log('Your Auth ID:', token);
         webbrowser.open(link_to_open)
 
     def coins_amount(self):
+        """
+        Will show you the total amount of your coins
+        """
         url = "https://bot-hosting.net/api/me"
-        headers = {
-            "Authorization": self.auth_id
-        }
 
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=self._headers)
 
         if response.status_code == 200:
             print("Request successful!")
@@ -46,14 +52,27 @@ console.log('Your Auth ID:', token);
             print(f"Error: {response.status_code}")
             print("Response:")
             print(response.text)
+
+    def affiliate_data(self):
+        """
+        Return your affiliate data (coins/referral, uses and your link)
+        """
+
+        data = requests.get(urls["affiliate"], headers=self._headers).json()
+        class AffiliateData:
+            coinsPerReferral = data["coinsPerReferral"]
+            enabled = data["enabled"]
+            link = data["link"]
+            uses = data["uses"]
+        return AffiliateData
     
     def about(self):
+        """
+        Will give you a quick overview over your account
+        """
         url = "https://bot-hosting.net/api/me"
-        headers = {
-            "Authorization": self.auth_id
-        }
 
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=self._headers)
 
         if response.status_code == 200:
             try:
@@ -72,28 +91,30 @@ console.log('Your Auth ID:', token);
             print(response.text)
 
     def id_check(self):
+        """
+        Checks if your Auth ID is valid
+        """
         url = "https://bot-hosting.net/api/me"
-        headers = {
-            "Authorization": self.auth_id
-        }
 
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=self._headers)
 
         if response.status_code == 200:
             try:
                 user_info = response.json()
                 print("Sent Request!")
                 print("Username: ", user_info['username'], " | ID: ", user_info['id'])
-                print("Current coins amount:", user_info['coins'])
-                print("Avatar:", user_info['avatar'])
+                print("Auth ID is valid.")
                 input("Press enter to continue")
             except Exception as e:
                 print(f"Error parsing response JSON: {e}")
-                print("Auth ID invalid.")
+                print("Auth ID is most likely invalid.")
         else:
             print("Auth_id is not valid. Please check your authentication credentials.")
     
     def sftp_pass(self):
+        """
+        This will generate a new SFTP password
+        """
         i = input("Information: This resets your old one, are you sure? (yes/no)")
         if i == "yes":
             passwd = requests.post(urls["newPassword"], headers=self._headers).json()["password"]
@@ -106,6 +127,10 @@ console.log('Your Auth ID:', token);
 class Server:
     def __init__(self, auth_id):
         self.auth_id = auth_id
+        self._headers = {
+        "Authorization": self.auth_id,
+        "content-type": "application/json"
+        }        
     
     def cls(self):
         if os.name == 'nt':
@@ -114,12 +139,11 @@ class Server:
             os.system('clear')
 
     def change_language(self, language=None):
+        """Gets all your servers, lets you select one, after that you select a language and it'll change the server to that
+        """
         url_list = "https://bot-hosting.net/api/servers"
-        headers_list = {
-            "Authorization": self.auth_id
-        }
 
-        response_list = requests.get(url_list, headers=headers_list)
+        response_list = requests.get(url_list, headers=self._headers)
 
         if response_list.status_code == 200:
             server_list = response_list.json()
@@ -154,16 +178,12 @@ class Server:
             egg = language_to_egg.get(programming_language.lower(), "Unknown Language")
             print(f"Selected server ID: {selected_server_id}, Programming Language: {programming_language}, Egg: {egg}")
             change_software_url = f"{urls['servers']}/changeSoftware"
-            headers_change_software = {
-                "Authorization": self.auth_id,
-                "Content-Type": "application/json"
-            }
             payload_change_software = {
                 "id": selected_server_id,
                 "egg": str(egg)
             }
 
-            response_change_software = requests.post(change_software_url, headers=headers_change_software, json=payload_change_software)
+            response_change_software = requests.post(change_software_url, headers=self._headers, json=payload_change_software)
 
             if response_change_software.status_code == 200:
                 print("Software change request successful!")
@@ -172,13 +192,13 @@ class Server:
                 print(response_change_software.text)
 
     def get_info(self):
-
+        """
+        First gets all your servers, then you can select a certain one and it shows you the specific info about it
+        Such as: Renewal, Identifier, Server ID, if its suspended, etc.
+        """
         url_list = "https://bot-hosting.net/api/servers"
-        headers_list = {
-            "Authorization": self.auth_id
-        }
 
-        response_list = requests.get(url_list, headers=headers_list)
+        response_list = requests.get(url_list, headers=self._headers)
 
         if response_list.status_code == 200:
             server_list = response_list.json()
@@ -198,11 +218,8 @@ class Server:
                 selected_server_id = selection_input
 
             url_details = f"{urls['servers']}/{selected_server_id}"
-            headers_details = {
-                "Authorization": self.auth_id
-            }
 
-            response_details = requests.get(url_details, headers=headers_details)
+            response_details = requests.get(url_details, headers=self._headers)
 
             if response_details.status_code == 200:
                 data = response_details.json()
@@ -244,12 +261,11 @@ class Server:
             print(response_list.text)
 
     def show(self):
+        """Shows all your servers
+        """
         url = "https://bot-hosting.net/api/servers"
-        headers = {
-            "Authorization": self.auth_id
-        }
 
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=self._headers)
 
         if response.status_code == 200:
             print("Request successful!")
@@ -262,12 +278,12 @@ class Server:
             print(response.text)
 
     def delete(self):
+        """
+        This function gets all your server ids and on your request deletes a certain one (only with your confirmation)
+        """
         url_list = "https://bot-hosting.net/api/servers"
-        headers_list = {
-            "Authorization": self.auth_id
-        }
 
-        response_list = requests.get(url_list, headers=headers_list)
+        response_list = requests.get(url_list, headers=self._headers)
 
         if response_list.status_code == 200:
             server_list = response_list.json()
@@ -286,16 +302,12 @@ class Server:
                 
 
                 url_delete = "https://bot-hosting.net/api/servers/delete"
-                headers = {
-                    "Authorization": self.auth_id,
-                    "content-type": "application/json"
-                }
 
                 data = {
                     "id": int(selected_server_id)
                 }
 
-                r = requests.post(url_delete, json=data, headers=headers)
+                r = requests.post(url_delete, json=data, headers=self._headers)
                 print(r.content)
 
             except (ValueError, IndexError):

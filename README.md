@@ -15,10 +15,10 @@ https://github.com/iamkubi/pydactyl Made possible by this guy!
 - [Credits](#credits)
 
 ## Installation
-Dependencies :
-- requests
-- colorama
-- datetime
+Dependencies (+ used version) :
+- requests==2.31.0
+- colorama==0.4.6
+- datetime==5.4
 
 ## Usage
 ### How to get the Authorization key
