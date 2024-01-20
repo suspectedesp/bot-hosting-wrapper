@@ -1,3 +1,4 @@
+import os
 import webbrowser
 import requests
 import time
@@ -105,7 +106,13 @@ console.log('Your Auth ID:', token);
 class Server:
     def __init__(self, auth_id):
         self.auth_id = auth_id
-
+    
+    def cls(self):
+        if os.name == 'nt':
+            os.system('cls')
+        else:
+            os.system('clear')
+            
     def change_language(self, language=None):
         def cls():
             print("\033c")
@@ -257,3 +264,43 @@ class Server:
             print(f"Error: {response.status_code}")
             print("Response:")
             print(response.text)
+
+    def delete(self):
+        url_list = "https://bot-hosting.net/api/servers"
+        headers_list = {
+            "Authorization": self.auth_id
+        }
+
+        response_list = requests.get(url_list, headers=headers_list)
+
+        if response_list.status_code == 200:
+            server_list = response_list.json()
+            print("Available Servers:")
+
+            for index, server_info in enumerate(server_list, start=1):
+                print(f"{index}. Server ID: {server_info['serverid']}, Name: {server_info['name']}")
+
+            print("Select your server ID or list number: ")
+            selection_input = input("[>]")
+            self.cls()
+
+            try:
+                selection = int(selection_input)
+                selected_server_id = str(server_list[selection - 1]['serverid'])
+                
+
+                url_delete = "https://bot-hosting.net/api/servers/delete"
+                headers = {
+                    "Authorization": self.auth_id,
+                    "content-type": "application/json"
+                }
+
+                data = {
+                    "id": int(selected_server_id)
+                }
+
+                r = requests.post(url_delete, json=data, headers=headers)
+                print(r.content)
+
+            except (ValueError, IndexError):
+                print("Invalid selection. Please choose a valid server.")

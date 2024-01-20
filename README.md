@@ -76,4 +76,5 @@ Many thanks to:
 - @MathiasDPX for giving me some ideas and remaking the code
 - @Pondwader for letting me upload this
 - @iamkubi for making pydactyl (api wrapper for pterodactyl panel)
+
 Many thanks guys! I appreciate it <3
