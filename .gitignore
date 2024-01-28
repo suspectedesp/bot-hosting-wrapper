@@ -155,3 +155,4 @@ tests/test.py
 tests/about.py
 testing/about.py
 testing/test.py
+.vscode/settings.json
