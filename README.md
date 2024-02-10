@@ -1,11 +1,13 @@
 # Bot-Hosting.net API Wrapper | Information
+This README will probably only work on github, not pypi, idk why
+
 Important: Your account token expires every 2 weeks! If something isnt working, make sure you use an up-to-date Auth ID :)
 
 A simple API Wrapper for certain information in python for bot-hosting.net
 
 This is made by @vortexsys on discord, staff member but not developer of bot-hosting.net
 
-https://github.com/iamkubi/pydactyl Made possible by this guy!
+What a blessing that pdactyl exists
 ## Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
@@ -76,6 +78,6 @@ SOFTWARE.
 Many thanks to:
 - @mathiasDPX for giving me some ideas and remaking the code
 - @pondwader for letting me upload this
-- @iamkubi for making pydactyl (api wrapper for pterodactyl panel)
+- @iamkubi api wrapper for pterodactyl panel
 
 Many thanks guys! I appreciate it <3

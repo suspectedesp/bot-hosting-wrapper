@@ -4,12 +4,7 @@ import requests
 import time
 from colorama import Fore
 from datetime import datetime, timezone
-
-urls = {
-    "servers": "https://bot-hosting.net/api/servers/",
-    "affiliate": "https://bot-hosting.net/api/affiliate",
-    "newPassword": "https://bot-hosting.net/api/newPassword"
-}
+from __init__ import urls
 
 class Account:
     def __init__(self, auth_id):

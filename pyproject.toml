@@ -1,6 +1,6 @@
 [project]
 name = "bot_hosting_wrapper"
-version = "1.1.1"
+version = "1.1.2"
 authors = [
   { name="Vortex", email="vrtx.supp0rt@gmail.com" },
 ]
@@ -15,8 +15,8 @@ classifiers = [
 
 [project.urls]
 Homepage = "https://vortexsys.github.io/bhw-site/"
-Repository = "https://github.com/vortexsys/bot-hosting-wrapper"
-
+Repository = "https://github.com/vortexsys/bot-hosting-wrapper/"
+Bot-Hosting = "https://bot-hosting.net/"
 [tool.poetry.dependencies]
 python = "^3.8"
 requests = "^2.26.0"
