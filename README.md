@@ -5,7 +5,7 @@ Important: Your account token expires every 2 weeks! If something isnt working, 
 
 A simple API Wrapper for certain information in python for bot-hosting.net
 
-This is made by @vortexsys on discord, staff member but not developer of bot-hosting.net
+This is made by @suspectedesp on discord, staff member but not developer of bot-hosting.net
 
 What a blessing that pdactyl exists
 ## Table of Contents
@@ -35,7 +35,7 @@ console.log('Your Auth ID:', token);
 ```
 Now you got your Auth ID and can use all the scripts, congrats!
 
-For an usage of the commands etc. please go [here](https://github.com/vortexsys/bot-hosting-wrapper/wiki/Coding-Usage)
+For an usage of the commands etc. please go [here](https://github.com/suspectedesp/bot-hosting-wrapper/wiki/Coding-Usage)
 
 ## Changelog
 Latest Changelog:
@@ -67,7 +67,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ## Contributing
-- Follow these simple steps for contributing via [Github](https://github.com/vortexsys/bot-hosting-wrapper)
+- Follow these simple steps for contributing via [Github](https://github.com/suspectedesp/bot-hosting-wrapper)
 - Fork the repository.
 - Create a new branch: git checkout -b feature/my-feature.
 - Commit your changes: git commit -am 'Add my feature'.
