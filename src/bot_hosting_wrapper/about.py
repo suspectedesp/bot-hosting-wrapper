@@ -19,6 +19,7 @@ class Account:
         "content-type": "application/json"
         }
 
+
     def get_auth_id():
         """A quick instruction on how to get the auth id
         """
@@ -34,6 +35,7 @@ console.log('Your Auth ID:', token);
         input("Pressing Enter will open the link where you can do all that :)")
         link_to_open = "https://bot-hosting.net/panel/"
         webbrowser.open(link_to_open)
+
 
     def coins_amount(self):
         """
@@ -53,6 +55,7 @@ console.log('Your Auth ID:', token);
             print("Response:")
             print(response.text)
 
+
     def affiliate_data(self):
         """
         Return your affiliate data (coins/referral, uses and your link)
@@ -66,6 +69,7 @@ console.log('Your Auth ID:', token);
             uses = data["uses"]
         return AffiliateData
     
+
     def about(self):
         """
         Will give you a quick overview over your account
@@ -90,6 +94,7 @@ console.log('Your Auth ID:', token);
             print("Response:")
             print(response.text)
 
+
     def id_check(self):
         """
         Checks if your Auth ID is valid
@@ -111,6 +116,7 @@ console.log('Your Auth ID:', token);
         else:
             print("Auth_id is not valid. Please check your authentication credentials.")
     
+
     def sftp_pass(self):
         """
         This will generate a new SFTP password
@@ -124,6 +130,7 @@ console.log('Your Auth ID:', token);
             time.sleep(0.)
             exit()
 
+
 class Server:
     def __init__(self, auth_id):
         self.auth_id = auth_id
@@ -132,11 +139,13 @@ class Server:
         "content-type": "application/json"
         }        
     
+
     def cls(self):
         if os.name == 'nt':
             os.system('cls')
         else:
             os.system('clear')
+
 
     def change_language(self, language=None):
         """Gets all your servers, lets you select one, after that you select a language and it'll change the server to that
@@ -190,6 +199,7 @@ class Server:
             else:
                 print(f"Failed to change software. Status code: {response_change_software.status_code}")
                 print(response_change_software.text)
+
 
     def get_info(self):
         """
@@ -260,6 +270,7 @@ class Server:
             print("Response:")
             print(response_list.text)
 
+
     def show(self):
         """Shows all your servers
         """
@@ -276,6 +287,7 @@ class Server:
             print(f"Error: {response.status_code}")
             print("Response:")
             print(response.text)
+
 
     def delete(self, server_id=None):
         """
