@@ -1,13 +1,13 @@
 ```py
 from bot-hosting-wrapper import Account, Server
 
-def main():
+def main() -> None:
     auth_id = input("Enter your auth id")
     acc = Account(auth_id)
     serv = Server(auth_id)
     #serv.delete() # you can also do just serv.delete("serverid")
     serv.show()
-    server_info = serv.get_info(all=True)
+    server_info = serv.get_info(all=False, specific_info="nextrenewal")
     print(server_info)
     acc.coins_amount()
     acc.about()

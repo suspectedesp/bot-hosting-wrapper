@@ -179,6 +179,7 @@ class Server:
         First gets all your servers, then you can select a certain one and it shows you the specific info about it
         Such as: Renewal, Identifier, Server ID, if its suspended, etc.
         Example Usage of Params: specific_info="cpu" or all=True
+        specific info can either be name | id | identifier | coins/month | suspended | ram | storage | cpu | nextrenewal
         """
         url_list = "https://bot-hosting.net/api/servers"
 
@@ -201,7 +202,7 @@ class Server:
             except ValueError:
                 selected_server_id = selection_input
 
-            url_details = f"{urls['servers']}/{selected_server_id}"
+            url_details = f"{urls['servers']}{selected_server_id}"
 
             response_details = requests.get(url_details, headers=self._headers)
 
@@ -217,10 +218,12 @@ class Server:
                 cpu = data.get("plan", {}).get("cpu")
 
                 next_renewal = data.get("nextRenewal")
-
+                
                 if next_renewal is not None:
-                    renewal_numeric = int(''.join(c for c in next_renewal if c.isdigit()))
-
+                    renewal_date_first = next_renewal
+                    renewal_numeric = int(''.join(c for c in renewal_date_first if c.isdigit()))
+                else:
+                    print(response_details.json())
 
                 if next_renewal is not None:
                     unix_timestamp = renewal_numeric / 1000
@@ -243,23 +246,23 @@ class Server:
                         if specific_info is None:
                             return print("Error! Specific Info cannot be None while all is False | Function used: get_info")
                         else:
-                            if specific_info == "Identifier":
+                            if specific_info.lower() == "identifier":
                                 return identifier
-                            elif specific_info == "Server ID":
+                            elif specific_info.lower() == "id":
                                 return selected_server_id
-                            elif specific_info == "Is suspended?":
+                            elif specific_info.lower() == "suspended":
                                 return suspended
-                            elif specific_info == "Server Name":
+                            elif specific_info.lower() == "name":
                                 return name
-                            elif specific_info == "Coins per month":
+                            elif specific_info.lower() == "coins/month":
                                 return coins_per_month
-                            elif specific_info == "Storage":
+                            elif specific_info.lower() == "storage":
                                 return f"{storage} MB"
-                            elif specific_info == "Ram":
+                            elif specific_info.lower() == "ram":
                                 return f"{ram} MB"
-                            elif specific_info == "CPU":
+                            elif specific_info.lower() == "cpu":
                                 return f"{cpu}%"
-                            elif specific_info == "Next Renewal":
+                            elif specific_info.lower() == "nextrenewal":
                                 return renewal_date
                             else:
                                 return print("Error! Invalid specific_info value provided.")
