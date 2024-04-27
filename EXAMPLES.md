@@ -1,5 +1,5 @@
 ```py
-from about import *
+from bot-hosting-wrapper import Account, Server
 
 def main():
     auth_id = input("Enter your auth id")
