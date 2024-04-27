@@ -19,7 +19,6 @@ class Account:
         "content-type": "application/json"
         }
 
-
     def get_auth_id():
         """A quick instruction on how to get the auth id
         """
@@ -36,7 +35,6 @@ console.log('Your Auth ID:', token);
         link_to_open = "https://bot-hosting.net/panel/"
         webbrowser.open(link_to_open)
 
-
     def coins_amount(self):
         """
         Will show you the total amount of your coins
@@ -46,15 +44,11 @@ console.log('Your Auth ID:', token);
         response = requests.get(url, headers=self._headers)
 
         if response.status_code == 200:
-            print("Request successful!")
             coins_amount = response.json().get('coins')
-            print("Your current coins amount:", coins_amount)
-            input("Press enter to continue")
+            return coins_amount
         else:
             print(f"Error: {response.status_code}")
-            print("Response:")
             print(response.text)
-
 
     def affiliate_data(self):
         """
@@ -69,7 +63,6 @@ console.log('Your Auth ID:', token);
             uses = data["uses"]
         return AffiliateData
     
-
     def about(self):
         """
         Will give you a quick overview over your account
@@ -85,17 +78,14 @@ console.log('Your Auth ID:', token);
                 print("Username: ", user_info['username'], " | ID: ", user_info['id'])
                 print("Current coins amount:", user_info['coins'])
                 print("Avatar:", user_info['avatar'])
-                input("Press enter to continue")
             except Exception as e:
                 print(f"Error parsing response JSON: {e}")
                 print("auth_id invalid")
         else:
             print(f"Error: {response.status_code}")
-            print("Response:")
             print(response.text)
 
-
-    def id_check(self):
+    def id_check(self, about = None):
         """
         Checks if your Auth ID is valid
         """
@@ -106,30 +96,22 @@ console.log('Your Auth ID:', token);
         if response.status_code == 200:
             try:
                 user_info = response.json()
-                print("Sent Request!")
-                print("Username: ", user_info['username'], " | ID: ", user_info['id'])
-                print("Auth ID is valid.")
-                input("Press enter to continue")
+                if about is not None:
+                    if about:
+                        print("Username: ", user_info['username'], " | ID: ", user_info['id'])
+                return "Auth ID is valid."
             except Exception as e:
                 print(f"Error parsing response JSON: {e}")
                 print("Auth ID is most likely invalid.")
         else:
             print("Auth_id is not valid. Please check your authentication credentials.")
     
-
     def sftp_pass(self):
         """
         This will generate a new SFTP password
         """
-        i = input("Information: This resets your old one, are you sure? (yes/no)")
-        if i == "yes":
-            passwd = requests.post(urls["newPassword"], headers=self._headers).json()["password"]
-            input(f"New Password: {passwd}  | Press Enter to continue")
-        elif i == "no":
-            print("Exiting then!")
-            time.sleep(0.)
-            exit()
-
+        password = requests.post(urls["newPassword"], headers=self._headers).json()["password"]
+        return password
 
 class Server:
     def __init__(self, auth_id):
@@ -137,15 +119,7 @@ class Server:
         self._headers = {
         "Authorization": self.auth_id,
         "content-type": "application/json"
-        }        
-    
-
-    def cls(self):
-        if os.name == 'nt':
-            os.system('cls')
-        else:
-            os.system('clear')
-
+        }       
 
     def change_language(self, language=None):
         """Gets all your servers, lets you select one, after that you select a language and it'll change the server to that
@@ -163,7 +137,7 @@ class Server:
 
             print("Select your server ID or list number: ")
             selection_input = input("[>]")
-            self.cls()
+            
 
             try:
                 selection = int(selection_input)
@@ -200,11 +174,11 @@ class Server:
                 print(f"Failed to change software. Status code: {response_change_software.status_code}")
                 print(response_change_software.text)
 
-
-    def get_info(self):
+    def get_info(self, specific_info = None, all = None):
         """
         First gets all your servers, then you can select a certain one and it shows you the specific info about it
         Such as: Renewal, Identifier, Server ID, if its suspended, etc.
+        Example Usage of Params: specific_info="cpu" or all=True
         """
         url_list = "https://bot-hosting.net/api/servers"
 
@@ -219,7 +193,7 @@ class Server:
 
             print("Select your server ID or list number: ")
             selection_input = input("[>]")
-            self.cls()
+            
 
             try:
                 selection = int(selection_input)
@@ -242,34 +216,98 @@ class Server:
                 ram = data.get("plan", {}).get("ram")
                 cpu = data.get("plan", {}).get("cpu")
 
-                renewal_numeric = int(''.join(c for c in data.get("nextRenewal") if c.isdigit()))
+                next_renewal = data.get("nextRenewal")
 
-                if renewal_numeric:
+                if next_renewal is not None:
+                    renewal_numeric = int(''.join(c for c in next_renewal if c.isdigit()))
+
+
+                if next_renewal is not None:
                     unix_timestamp = renewal_numeric / 1000
                     renewal_date = datetime.fromtimestamp(unix_timestamp, timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')
 
-                    print(f"Identifier: {identifier}")
-                    print(f"Server ID: {selected_server_id}")
-                    print(f"Is suspended?: {suspended}")
-                    print(f"Server Name: {name}")
-                    print(f"Coins per month: {coins_per_month}")
-                    print(f"Storage: {storage} MB")
-                    print(f"Ram: {ram} MB")
-                    print(f"CPU: {cpu}%")
-                    print(f"Next Renewal: {renewal_date}")
-                    input("Press enter to continue")
-                else:
-                    print("Error: Could not extract numeric values from nextRenewal")
+                    if all:
+                        server_info = {
+                            "Identifier": identifier,
+                            "Server ID": selected_server_id,
+                            "Is suspended?": suspended,
+                            "Server Name": name,
+                            "Coins per month": coins_per_month,
+                            "Storage": f"{storage} MB",
+                            "Ram": f"{ram} MB",
+                            "CPU": f"{cpu}%",
+                            "Next Renewal": renewal_date
+                        }
+                        return server_info
+                    else:
+                        if specific_info is None:
+                            return print("Error! Specific Info cannot be None while all is False | Function used: get_info")
+                        else:
+                            if specific_info == "Identifier":
+                                return identifier
+                            elif specific_info == "Server ID":
+                                return selected_server_id
+                            elif specific_info == "Is suspended?":
+                                return suspended
+                            elif specific_info == "Server Name":
+                                return name
+                            elif specific_info == "Coins per month":
+                                return coins_per_month
+                            elif specific_info == "Storage":
+                                return f"{storage} MB"
+                            elif specific_info == "Ram":
+                                return f"{ram} MB"
+                            elif specific_info == "CPU":
+                                return f"{cpu}%"
+                            elif specific_info == "Next Renewal":
+                                return renewal_date
+                            else:
+                                return print("Error! Invalid specific_info value provided.")
+                else:                    
+                    if all:
+                        server_info = {
+                            "Identifier": identifier,
+                            "Server ID": selected_server_id,
+                            "Is suspended?": suspended,
+                            "Server Name": name,
+                            "Coins per month": coins_per_month,
+                            "Storage": f"{storage} MB",
+                            "Ram": f"{ram} MB",
+                            "CPU": f"{cpu}%",
+                            "Next Renewal": "NoneType Error"
+                        }
+                        return server_info
+                    else:
+                        if specific_info is None:
+                            return print("Error! Specific Info cannot be None while all is False | Function used: get_info")
+                        else:
+                            if specific_info == "Identifier":
+                                return identifier
+                            elif specific_info == "Server ID":
+                                return selected_server_id
+                            elif specific_info == "Is suspended?":
+                                return suspended
+                            elif specific_info == "Server Name":
+                                return name
+                            elif specific_info == "Coins per month":
+                                return coins_per_month
+                            elif specific_info == "Storage":
+                                return f"{storage} MB"
+                            elif specific_info == "Ram":
+                                return f"{ram} MB"
+                            elif specific_info == "CPU":
+                                return f"{cpu}%"
+                            elif specific_info == "Next Renewal":
+                                return renewal_date
+                            else:
+                                return print("Error! Invalid specific_info value provided.")
             else:
                 print(f"Error: {response_details.status_code}")
-                print("Response:")
                 print(response_details.text)
 
         else:
             print(f"Error: {response_list.status_code}")
-            print("Response:")
             print(response_list.text)
-
 
     def show(self):
         """Shows all your servers
@@ -280,14 +318,11 @@ class Server:
 
         if response.status_code == 200:
             print("Request successful!")
-            print("Response:")
-            print(response.json())
-            input("Press enter to continue")
+            responsee = response.json()
+            return responsee
         else:
             print(f"Error: {response.status_code}")
-            print("Response:")
             print(response.text)
-
 
     def delete(self, server_id=None):
         """
@@ -308,7 +343,7 @@ class Server:
 
                 print("Select your server ID or list number: ")
                 selection_input = input("[>]")
-                self.cls()
+                
 
                 try:
                     selection = int(selection_input)
@@ -326,4 +361,4 @@ class Server:
             }
 
             r = requests.post(url_delete, json=data, headers=self._headers)
-            print(r.content)
+            return r.content
