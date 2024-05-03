@@ -155,7 +155,7 @@ class Server:
             # print(f"Selected server ID: {selected_server_id}, Programming Language: {programming_language}, Egg: {egg}")
             change_software_url = f"{urls['servers']}/changeSoftware"
             payload_change_software = {
-                "id": selected_server_id,
+                "id": server_id,
                 "egg": str(egg)
             }
 

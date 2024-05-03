@@ -39,14 +39,14 @@ For an usage of the commands etc. please go [to this page](https://github.com/su
 
 ## Changelog
 Latest Changelog:
-- Added function descriptions
-- Tested for optimization as always
-- Fixed the README file once again
+- Fixed Stupid Bugs
+- Tested & rewritten for optimization & automation
+- Updated the latest README & Usage Wiki & EXAMPLES
 
 ## License
 MIT License
 
-Copyright (c) 2024 Vortex
+Copyright (c) 2024 [redacted]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
