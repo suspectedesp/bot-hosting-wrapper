@@ -1,20 +1,30 @@
-```py
+```python
 from bot-hosting-wrapper import Account, Server
 
 def main() -> None:
-    auth_id = input("Enter your auth id")
+    auth_id = input("Enter your auth id: ")
     acc = Account(auth_id)
     serv = Server(auth_id)
-    #serv.delete() # you can also do just serv.delete("serverid")
+    
+    # Delete a specific server by ID
+    # serv.delete("serverid") # Uncomment and replace "serverid" with the actual server ID if needed
+    # show all servers
     serv.show()
-    server_info = serv.get_info(all=False, specific_info="nextrenewal")
+    # Get specific information about a server (example: next renewal date)
+    server_info = serv.get_info(everything=False, specific_info="nextrenewal", selected_server_id="serverid")
     print(server_info)
+    # Get current coins amount
     acc.coins_amount()
+    # Get account overview
     acc.about()
+    # Check if AUTH ID is valid
     valid_auth = acc.id_check()
-    print(valid_auth)
-    # acc.sftp_pass() # careful, this resets the sftp password
-    # serv.change_language(language="python") # you can also do just serv.change_language()
+    print(valid_auth)    
+    # Generate a new SFTP password (careful, this resets the SFTP password)
+    # acc.sftp_pass()    
+    # Change server's coding language (example: change to Python)
+    # serv.change_language(language="python") # Uncomment if needed    
+    # Get affiliate data
     affiliate_data = acc.affiliate_data()
     print("Coins per referral:", affiliate_data.coinsPerReferral)
     print("Enabled:", affiliate_data.enabled)
