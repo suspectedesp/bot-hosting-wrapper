@@ -170,9 +170,9 @@ class Server:
 
     def get_info(self, specific_info=None, everything=None, selected_server_id: str = None):
         """
-        First gets all your servers, then you can select a certain one, and it shows you the specific info about it
-        Such as: Renewal, Identifier, Server ID, if its suspended, etc.
-        Example Usage of Params: specific_info="cpu" or all=True
+        First gets all your servers, then you can select a certain one, and it shows you the specific info about it\n
+        Such as: Renewal, Identifier, Server ID, if its suspended, etc.\n
+        Example Usage of Params: specific_info="cpu" or all=True\n
         specific info can either be name | id | identifier | coins/month | suspended | ram | storage | cpu | nextrenewal
         """
         renewal_numeric = None
