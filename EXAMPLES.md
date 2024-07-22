@@ -1,11 +1,14 @@
 ```python
-from bot-hosting-wrapper import Account, Server
+from bot-hosting-wrapper import Account, Server, Interactive
 
 def main() -> None:
     auth_id = input("Enter your auth id: ")
     acc = Account(auth_id)
     serv = Server(auth_id)
-    
+    #interactive includes console/input required stuff like the old version did
+    interactive = Interactive(auth_id)
+    interactive.get_info()
+
     # Delete a specific server by ID
     # serv.delete("serverid") # Uncomment and replace "serverid" with the actual server ID if needed
     # show all servers
