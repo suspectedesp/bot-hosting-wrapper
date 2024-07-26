@@ -7,7 +7,8 @@ from colorama import Fore
 urls = {
     "servers": "https://bot-hosting.net/api/servers/",
     "affiliate": "https://bot-hosting.net/api/affiliate",
-    "newPassword": "https://bot-hosting.net/api/newPassword"
+    "newPassword": "https://bot-hosting.net/api/newPassword",
+    "freeCoinsStatus": "https://bot-hosting.net/api/freeCoinsStatus"
 }
 
 
