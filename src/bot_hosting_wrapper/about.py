@@ -117,6 +117,22 @@ console.log('Your Auth ID:', token);
         password = requests.post(urls["newPassword"], headers=self._headers).json()["password"]
         return password
 
+    def claimable(self):
+        """
+        Check if free coins are claimable and the time left
+        """
+        response = requests.get(urls["freeCoinsStatus"], headers=self._headers)
+        
+        if response.status_code == 200:
+            data = response.json()
+            return {
+                "claimable": data["claimable"],
+                "timeLeft": data["timeLeft"]
+            }
+        else:
+            print(f"Error: {response.status_code}")
+            print(response.text)
+
 
 class Server:
     def __init__(self, auth_id):
