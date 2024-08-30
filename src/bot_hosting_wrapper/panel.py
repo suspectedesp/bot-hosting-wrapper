@@ -20,11 +20,14 @@ class Panel:
             'Content-Type': 'application/json',
             "Authorization": f"Bearer {self.api_key}"
         }
+        
         response = requests.get(url=self.urls["server_list"], headers=headers)
         if response.status_code != 200:
             return f"Status code: {response.status_code} : {response.content}"
+        
         data = json.loads(response.text)
         serverinfo = {}
+
         for server in data['data']:
             uuid = server['attributes']['uuid']
             identifier = server['attributes']['identifier']
@@ -32,17 +35,21 @@ class Panel:
             serverinfo[uuid] = {'identifier': identifier, 'name': name}
             serverinfo[identifier] = {'uuid': uuid, 'name': name}
             serverinfo[name] = {'uuid': uuid, 'identifier': identifier}
+
         return serverinfo
 
     def get_server_uuid(self, identifier=None, name=None):
         if identifier is None and name is None:
             return "No provided Arguments!"
+        
         findby = None
         if identifier is None:
             findby = "name"
         elif name is None:
             findby = "identifier"
+
         server_list = self.get_serverlist()
+
         if findby == "name":
             if name not in server_list:
                 return None
@@ -91,6 +98,7 @@ class Panel:
             if identifier not in server_list:
                 return None
             return server_list[identifier]['name']
+        
     def get_directory(self, server_id=None, directory: str = None):
         if directory is None:
             directory = '%2F'
