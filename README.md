@@ -39,6 +39,7 @@ For an usage of the commands etc. please go [to this page](https://github.com/su
 
 ## Changelog
 Latest Changelog:
+- Added an api wrapper for the control panel
 - Fixed Stupid Bugs
 - Tested & rewritten for optimization & automation
 - Updated the latest README & Usage Wiki & EXAMPLES
