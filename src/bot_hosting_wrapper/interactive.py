@@ -1,5 +1,6 @@
 import os
 import requests
+import subprocess
 
 from datetime import datetime, timezone
 
@@ -12,9 +13,11 @@ class Interactive:
             "content-type": "application/json"
         }
 
+
     @staticmethod
     def cls():
-        os.system('cls' if os.name == 'nt' else 'clear')
+        subprocess.run(['cls'] if os.name == 'nt' else ['clear'])
+
 
     def get_info(self) -> None:
         """
