@@ -1,8 +1,8 @@
-import webbrowser
-from datetime import datetime, timezone
-import os
 import requests
+import webbrowser
+
 from colorama import Fore
+from datetime import datetime, timezone
 
 urls = {
     "servers": "https://bot-hosting.net/api/servers/",
@@ -123,7 +123,7 @@ console.log('Your Auth ID:', token);
         Check if free coins are claimable and the time left
         """
         response = requests.get(urls["freeCoinsStatus"], headers=self._headers)
-        
+
         if response.status_code == 200:
             data = response.json()
             return {
@@ -144,7 +144,8 @@ class Server:
         }
 
     def change_language(self, language=None, server_id: str = None):
-        """Gets all your servers, lets you select one, after that you select a language, and it'll change the server to that
+        """
+        Gets all your servers, lets you select 1, after that you select a language, and it'll change the server to that
         """
         url_list = "https://bot-hosting.net/api/servers"
 
@@ -156,7 +157,9 @@ class Server:
                 return print("Error at change_language: You must enter a server ID!")
 
             if language is None:
-                return print("Error at change_language: You must enter a programming language!")  # (java, python, nodejs, lua, deno, nodemon)
+                # (java, python, nodejs, lua, deno, nodemon)
+                return print("Error at change_language: You must enter a programming language!")
+
             else:
                 programming_language = language
                 language_to_egg = {
@@ -169,7 +172,7 @@ class Server:
                 }
 
             egg = language_to_egg.get(programming_language.lower(), "Unknown Language")
-            # print(f"Selected server ID: {selected_server_id}, Programming Language: {programming_language}, Egg: {egg}")
+            # f"Selected server ID: {selected_server_id}, Programming Language: {programming_language}, Egg: {egg}"
             change_software_url = f"{urls['servers']}/changeSoftware"
             payload_change_software = {
                 "id": server_id,
@@ -327,8 +330,9 @@ class Server:
 
         if response.status_code == 200:
             print("Request successful!")
-            responsee = response.json()
-            return responsee
+            response = response.json()
+            return response
+            # TODO: check if it works correctly
         else:
             print(f"Error: {response.status_code}")
             print(response.text)

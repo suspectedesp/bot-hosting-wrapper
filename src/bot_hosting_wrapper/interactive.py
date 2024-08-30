@@ -4,7 +4,6 @@ import requests
 from datetime import datetime, timezone
 
 
-
 class Interactive:
     def __init__(self, auth_id):
         self.auth_id = auth_id
@@ -12,15 +11,14 @@ class Interactive:
             "Authorization": self.auth_id,
             "content-type": "application/json"
         }
-    
 
-    def cls(self):
-        os.system('cls' if os.name=='nt' else 'clear')
-
+    @staticmethod
+    def cls():
+        os.system('cls' if os.name == 'nt' else 'clear')
 
     def get_info(self) -> None:
         """
-        First gets all your servers, then you can select a certain one and it shows you the specific info about it
+        First gets all your servers, then you can select a certain one, and it shows you the specific info about it
         Such as: Renewal, Identifier, Server ID, if its suspended, etc.
         """
         url_list = "https://bot-hosting.net/api/servers"
@@ -54,22 +52,22 @@ class Interactive:
             print("Response:")
             print(response_details.text)
             return
-        
+
         data = response_details.json()
 
         identifier = data.get("identifier")
         suspended = data.get("suspended")
         name = data.get("name")
         coins_per_month = data.get("plan", {}).get("coinsPerMonth")
+        cpu = data.get("plan", {}).get("cpu")
         storage = data.get("plan", {}).get("storage")
         ram = data.get("plan", {}).get("ram")
-        cpu = data.get("plan", {}).get("cpu")
 
         next_renewal = data.get("nextRenewal")
         if not next_renewal:
             print("Error: 'nextRenewal' is missing/None")
             return
-        
+
         renewal_numeric = int(''.join(c for c in str(next_renewal) if c.isdigit()))
         unix_timestamp = renewal_numeric / 1000
         renewal_date = datetime.fromtimestamp(unix_timestamp, timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')
