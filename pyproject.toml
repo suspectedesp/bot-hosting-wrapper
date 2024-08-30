@@ -1,8 +1,8 @@
 [project]
 name = "bot_hosting_wrapper"
-version = "1.1.5"
+version = "1.2"
 authors = [
-  { name="Vortex", email="vrtx.supp0rt@gmail.com" },
+  { name="Bubblegum", email="vrtx.supp0rt@gmail.com" },
 ]
 description = "A simple API Wrapper for bot-hosting.net"
 readme = "README.md"
