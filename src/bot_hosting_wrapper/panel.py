@@ -21,7 +21,7 @@ class Panel:
             "Authorization": f"Bearer {self.api_key}"
         }
         
-        response = requests.get(url=self.urls["server_list"], headers=headers)
+        response = requests.get(url=self.urls["server_list"], headers=headers, timeout=6)
         if response.status_code != 200:
             return f"Status code: {response.status_code} : {response.content}"
         
@@ -114,7 +114,7 @@ class Panel:
             "directory": directory
         }
 
-        response = requests.get(url=serverfiles_url, headers=headers, json=payload)
+        response = requests.get(url=serverfiles_url, headers=headers, json=payload, timeout=6)
         if response.status_code == 200:
             return response.json()
         else:

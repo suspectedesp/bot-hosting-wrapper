@@ -25,7 +25,7 @@ class Interactive:
         Such as: Renewal, Identifier, Server ID, if its suspended, etc.
         """
         url_list = "https://bot-hosting.net/api/servers"
-        response_list = requests.get(url_list, headers=self._headers)
+        response_list = requests.get(url_list, headers=self._headers, timeout=6)
         if response_list.status_code != 200:
             print(f"Error: {response_list.status_code}")
             print("Response:")
@@ -49,7 +49,7 @@ class Interactive:
             selected_server_id = selection_input
 
         url_details = f"https://bot-hosting.net/api/servers/{selected_server_id}"
-        response_details = requests.get(url_details, headers=self._headers)
+        response_details = requests.get(url_details, headers=self._headers, timeout=6)
         if response_details.status_code != 200:
             print(f"Error: {response_details.status_code}")
             print("Response:")

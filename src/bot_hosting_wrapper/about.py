@@ -44,7 +44,7 @@ console.log('Your Auth ID:', token);
         """
         url = "https://bot-hosting.net/api/me"
 
-        response = requests.get(url, headers=self._headers)
+        response = requests.get(url, headers=self._headers, timeout=6)
 
         if response.status_code == 200:
             coins_amount = response.json().get('coins')
@@ -58,7 +58,7 @@ console.log('Your Auth ID:', token);
         Return your affiliate data (coins/referral, uses and your link)
         """
 
-        data = requests.get(urls["affiliate"], headers=self._headers).json()
+        data = requests.get(urls["affiliate"], headers=self._headers, timeout=6).json()
 
         class AffiliateData:
             coinsPerReferral = data["coinsPerReferral"]
@@ -74,7 +74,7 @@ console.log('Your Auth ID:', token);
         """
         url = "https://bot-hosting.net/api/me"
 
-        response = requests.get(url, headers=self._headers)
+        response = requests.get(url, headers=self._headers, timeout=6)
 
         if response.status_code == 200:
             try:
@@ -96,7 +96,7 @@ console.log('Your Auth ID:', token);
         """
         url = "https://bot-hosting.net/api/me"
 
-        response = requests.get(url, headers=self._headers)
+        response = requests.get(url, headers=self._headers, timeout=6)
 
         if response.status_code == 200:
             try:
@@ -115,14 +115,14 @@ console.log('Your Auth ID:', token);
         """
         This will generate a new SFTP password
         """
-        password = requests.post(urls["newPassword"], headers=self._headers).json()["password"]
+        password = requests.post(urls["newPassword"], headers=self._headers, timeout=6).json()["password"]
         return password
 
     def claimable(self):
         """
         Check if free coins are claimable and the time left
         """
-        response = requests.get(urls["freeCoinsStatus"], headers=self._headers)
+        response = requests.get(urls["freeCoinsStatus"], headers=self._headers, timeout=6)
 
         if response.status_code == 200:
             data = response.json()
@@ -149,7 +149,7 @@ class Server:
         """
         url_list = "https://bot-hosting.net/api/servers"
 
-        response_list = requests.get(url_list, headers=self._headers)
+        response_list = requests.get(url_list, headers=self._headers, timeout=6)
 
         if response_list.status_code == 200:
 
@@ -180,7 +180,7 @@ class Server:
             }
 
             response_change_software = requests.post(change_software_url, headers=self._headers,
-                                                     json=payload_change_software)
+                                                     json=payload_change_software, timeout=6)
 
             if response_change_software.status_code == 200:
                 return "Software change request successful!"
@@ -198,13 +198,13 @@ class Server:
         renewal_numeric = None
         url_list = "https://bot-hosting.net/api/servers"
 
-        response_list = requests.get(url_list, headers=self._headers)
+        response_list = requests.get(url_list, headers=self._headers, timeout=6)
 
         if response_list.status_code == 200:
 
             url_details = f"{urls['servers']}{selected_server_id}"
 
-            response_details = requests.get(url_details, headers=self._headers)
+            response_details = requests.get(url_details, headers=self._headers, timeout=6)
 
             if response_details.status_code == 200:
                 data = response_details.json()
@@ -322,11 +322,12 @@ class Server:
             print(response_list.text)
 
     def show(self):
-        """Shows all your servers
+        """
+        Shows all your servers
         """
         url = "https://bot-hosting.net/api/servers"
 
-        response = requests.get(url, headers=self._headers)
+        response = requests.get(url, headers=self._headers, timeout=6)
 
         if response.status_code == 200:
             print("Request successful!")
@@ -344,7 +345,7 @@ class Server:
         """
         url_list = "https://bot-hosting.net/api/servers"
 
-        response_list = requests.get(url_list, headers=self._headers)
+        response_list = requests.get(url_list, headers=self._headers, timeout=6)
 
         if response_list.status_code == 200:
 
@@ -359,5 +360,5 @@ class Server:
                 "id": int(selected_server_id)
             }
 
-            r = requests.post(url_delete, json=data, headers=self._headers)
+            r = requests.post(url_delete, json=data, headers=self._headers, timeout=6)
             return r.content
