@@ -149,7 +149,7 @@ class Panel:
         else:
             return f"{response.status_code} : {response.content}"
         
-    def check_2fa(self):
+    def get_2fa_code(self):
         """
         Generates a TOTP QR code image to allow the setup of 2FA
         """
@@ -169,7 +169,7 @@ class Panel:
         Enables TOTP 2FA by sending a POST request to the provided URL.
         
         Args:
-            totp_code (str): The Time-based One-Time Password (TOTP) generated from GET /account/two-factor or the check-2fa function.
+            totp_code (str): The Time-based One-Time Password (TOTP) generated from GET /account/two-factor or the get_2fa_code function.
         
         Returns:
             dict or str: The JSON response if successful, or an error message with the status code and content.
