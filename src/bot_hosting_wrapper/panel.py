@@ -131,7 +131,7 @@ class Panel:
             "Authorization": f"Bearer {self.api_key}"
         }
 
-        response = requests.get(url=self.urls["permission_check"], headers=headers)
+        response = requests.get(url=self.urls["permission_check"], headers=headers, timeout=6)
         if response.status_code == 200:
             return response.json()
         else:
@@ -143,7 +143,7 @@ class Panel:
             "Content-Type": 'application/json',
             "Authorization": f"Bearer {self.api_key}"
         }
-        response = requests.get(url=self.urls["account_check"], headers=headers)
+        response = requests.get(url=self.urls["account_check"], headers=headers, timeout=6)
         if response.status_code == 200:
             return response.json()
         else:
@@ -158,7 +158,7 @@ class Panel:
             "Content-Type": "application/json",
             "Authorization": f"Bearer {self.api_key}"
         }
-        response = requests.get(url=self.urls["2fa"], headers=headers)
+        response = requests.get(url=self.urls["2fa"], headers=headers, timeout=6)
         if response.status_code == 200:
             return response.json()
         else:
@@ -183,7 +183,7 @@ class Panel:
             "code": totp_code
         }
 
-        response = requests.post(url=self.urls["2fa"], headers=headers, json=body)
+        response = requests.post(url=self.urls["2fa"], headers=headers, json=body, timeout=6)
         
         if response.status_code == 200:
             return response.json()
@@ -211,7 +211,7 @@ class Panel:
             "password": password
         }
 
-        response = requests.delete(url=self.urls["2fa"], headers=headers, json=body)
+        response = requests.delete(url=self.urls["2fa"], headers=headers, json=body, timeout=6)
         
         if response.status_code == 200:
             return True
