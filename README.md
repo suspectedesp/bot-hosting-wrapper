@@ -5,7 +5,7 @@ Important: Your account token expires every 2 weeks! If something isnt working, 
 
 A simple API Wrapper for certain information in python for bot-hosting.net
 
-This is made by @suspectedesp on discord, an ex-staff member of bot-hosting.net
+This is made by @suspectedesp, an ex-staff member of bot-hosting.net
 
 What a blessing that pdactyl exists
 ## Table of Contents

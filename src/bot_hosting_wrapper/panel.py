@@ -197,7 +197,7 @@ class Panel:
         Enables TOTP 2FA by sending a POST request to the provided URL.
         
         Args:
-            password (str): Existing Password
+            password (str): Existing Password | there is no info on how to get it lol
         
         Returns:
             bool or dict: true if successful, or an error message with the status code and content.
