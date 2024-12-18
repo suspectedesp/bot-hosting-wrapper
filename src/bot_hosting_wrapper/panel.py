@@ -201,6 +201,9 @@ class Panel:
         
         Returns:
             bool or dict: true if successful, or an error message with the status code and content.
+        
+        Info:
+            There is currently no way to obtain the password from the panel.
         """
         headers = {
             "Accept": "application/json",
