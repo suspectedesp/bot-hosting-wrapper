@@ -18,10 +18,11 @@ What a blessing that pdactyl exists
 
 ## Installation
 Dependencies (+ used version) :
-- requests==2.31.0
-- colorama==0.4.6
-- datetime==5.4
-
+```txt
+requests==2.31.0
+colorama==0.4.6
+datetime==5.4
+```
 ## Usage
 ### How to get the Authorization key
 Please follow the instructions to get your auth id:
