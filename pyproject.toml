@@ -14,7 +14,6 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://suspectedesp.github.io/bhw-site/"
 Repository = "https://github.com/suspectedesp/bot-hosting-wrapper/"
 Bot-Hosting = "https://bot-hosting.net/"
 [tool.poetry.dependencies]
