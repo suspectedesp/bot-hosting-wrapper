@@ -1,7 +1,9 @@
 ```python
+import bot-hosting-wrapper
 from bot-hosting-wrapper import Account, Server, Interactive, Panel
 
 def main() -> None:
+    bot_hosting_wrapper.LOGGING_ENABLED = False
     auth_id = input("Enter your auth id: ")
     acc = Account(auth_id)
     serv = Server(auth_id)
