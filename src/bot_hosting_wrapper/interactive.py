@@ -15,7 +15,10 @@ class Interactive:
 
     @staticmethod
     def cls():
-        subprocess.run(['cls'] if os_name == 'nt' else ['clear'])
+        if os_name == 'nt':
+            subprocess.run(['cls'], shell=True)
+        else:
+            subprocess.run(['clear'], shell=True)
 
 
     def get_info(self) -> None:
