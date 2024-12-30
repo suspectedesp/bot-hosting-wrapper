@@ -1,9 +1,8 @@
-import os
 import requests
 import subprocess
 
 from datetime import datetime, timezone
-
+from os import name as os_name
 
 class Interactive:
     def __init__(self, auth_id):
@@ -16,7 +15,7 @@ class Interactive:
 
     @staticmethod
     def cls():
-        subprocess.run(['cls'] if os.name == 'nt' else ['clear'])
+        subprocess.run(['cls'] if os_name == 'nt' else ['clear'])
 
 
     def get_info(self) -> None:

@@ -4,6 +4,7 @@ import webbrowser
 from colorama import Fore
 from datetime import datetime, timezone
 
+
 urls = {
     "servers": "https://bot-hosting.net/api/servers/",
     "affiliate": "https://bot-hosting.net/api/affiliate",
@@ -133,6 +134,7 @@ console.log('Your Auth ID:', token);
         else:
             print(f"Error: {response.status_code}")
             print(response.text)
+
 
 
 class Server:

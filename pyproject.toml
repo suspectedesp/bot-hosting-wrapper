@@ -2,7 +2,7 @@
 name = "bot_hosting_wrapper"
 version = "1.2.1"
 authors = [
-  { name="Bubblegum", email="vrtx.supp0rt@gmail.com" },
+  { name="Bubblegum", email="None" },
 ]
 description = "A simple API Wrapper for bot-hosting.net"
 readme = "README.md"
