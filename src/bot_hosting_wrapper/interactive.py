@@ -1,8 +1,8 @@
 import requests
-import subprocess
+import sys
 
 from datetime import datetime, timezone
-from os import name as os_name
+from os import name as os_name, system
 
 class Interactive:
     def __init__(self, auth_id):
@@ -16,9 +16,15 @@ class Interactive:
     @staticmethod
     def cls():
         if os_name == 'nt':
-            subprocess.run(['cls'], shell=True)
+            if sys.stdout.isatty():  # cause for some older versions it wont work properly
+                try:
+                    print("\033[H\033[J", end="") # "magic" ansi sequence
+                except:
+                    system('cls')
+            else:
+                system('cls')
         else:
-            subprocess.run(['clear'], shell=True)
+            print("\033[H\033[J", end="")
 
 
     def get_info(self) -> None:
