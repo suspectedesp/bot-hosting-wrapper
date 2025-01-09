@@ -1,6 +1,6 @@
 ```python
-import bot-hosting-wrapper
-from bot-hosting-wrapper import Account, Server, Interactive, Panel
+import bot_hosting_wrapper
+from bot_hosting_wrapper import Account, Server, Interactive, Panel
 
 def main() -> None:
     bot_hosting_wrapper.LOGGING_ENABLED = False
