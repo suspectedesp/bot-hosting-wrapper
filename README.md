@@ -15,7 +15,7 @@ This is made by @suspectedesp on Github
 - [Credits](#credits)
 
 ## Installation
-Dependencies (+ used version) :
+Dependencies (+ used version in development) :
 ```txt
 requests==2.31.0
 colorama==0.4.6
@@ -38,15 +38,12 @@ For an usage of the commands etc. please go [to this page](https://github.com/su
 
 ## Changelog
 Latest Changelog:
-- Added an api wrapper for the control panel
-- Fixed Stupid Bugs
-- Tested & rewritten for optimization & automation
-- Updated the latest README & Usage Wiki & EXAMPLES
+- You can find the latest changelog on Github under the releases tab
 
 ## License
 MIT License
 
-Copyright (c) 2024 [redacted]
+Copyright (c) 2024-2025 [redacted]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
