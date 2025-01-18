@@ -12,14 +12,14 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
+dependencies = [
+    "requests>=2.26.0",
+    "colorama>=0.4.4",
+]
 
 [project.urls]
 Repository = "https://github.com/suspectedesp/bot-hosting-wrapper/"
 Bot-Hosting = "https://bot-hosting.net/"
-[tool.poetry.dependencies]
-python = "^3.8"
-requests = "^2.26.0"
-colorama = "^0.4.4"
 
 [build-system]
 requires = ["setuptools>=61.0"]
