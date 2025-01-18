@@ -1,13 +1,11 @@
 # Bot-Hosting.net API Wrapper | Information
-This README will probably only work on github, not pypi, idk why
 
 Important: Your account token expires every 2 weeks! If something isnt working, make sure you use an up-to-date Auth ID :)
 
-A simple API Wrapper for certain information in python for bot-hosting.net
+A simple API Wrapper for certain functions made in python for bot-hosting.net
 
-This is made by @suspectedesp, an ex-staff member of bot-hosting.net
+This is made by @suspectedesp on Github
 
-What a blessing that pdactyl exists
 ## Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
