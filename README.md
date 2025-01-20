@@ -1,4 +1,5 @@
 # Bot-Hosting.net API Wrapper | Information
+As of 20/01/2025, you can only use this library from bot-hosting.net's nodes, else cloudflare'll block your request (code 403)
 
 Important: Your account token expires every 2 weeks! If something isnt working, make sure you use an up-to-date Auth ID :)
 
