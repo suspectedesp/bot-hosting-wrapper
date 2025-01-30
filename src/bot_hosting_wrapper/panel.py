@@ -119,10 +119,9 @@ class Panel:
         }
 
         response = requests.get(url=serverfiles_url, headers=headers, json=payload, timeout=6)
-        if response.status_code == 200:
-            return response.json()
-        else:
+        if response.status_code != 200:
             return f"{response.status_code} : {response.content}"
+        return response.json()
 
     def check_permissions(self):
         headers = {
@@ -132,10 +131,9 @@ class Panel:
         }
 
         response = requests.get(url=self.urls["permission_check"], headers=headers, timeout=6)
-        if response.status_code == 200:
-            return response.json()
-        else:
+        if response.status_code != 200:
             return f"{response.status_code} : {response.content}"
+        return response.json()
         
     def check_account(self):
         headers = {
@@ -144,10 +142,9 @@ class Panel:
             "Authorization": f"Bearer {self.api_key}"
         }
         response = requests.get(url=self.urls["account_check"], headers=headers, timeout=6)
-        if response.status_code == 200:
-            return response.json()
-        else:
+        if response.status_code != 200:
             return f"{response.status_code} : {response.content}"
+        return response.json()
         
     def get_2fa_code(self):
         """
@@ -159,10 +156,9 @@ class Panel:
             "Authorization": f"Bearer {self.api_key}"
         }
         response = requests.get(url=self.urls["2fa"], headers=headers, timeout=6)
-        if response.status_code == 200:
-            return response.json()
-        else:
+        if response.status_code != 200:
             return f"{response.status_code} : {response.content}"
+        return response.json()
 
     def enable_2fa(self, totp_code):
         """
@@ -189,8 +185,7 @@ class Panel:
             return response.json()
         elif response.status_code == 400:
             return f"Invalid TOTP Token: {response.content}"
-        else:
-            return f"{response.status_code} : {response.content}"
+        return f"{response.status_code} : {response.content}"
         
     def disable_2fa(self, password):
         """
@@ -220,5 +215,4 @@ class Panel:
             return True
         elif response.status_code == 400:
             return f"BadRequestHttpException: {response.content}"
-        else:
-            return f"{response.status_code} : {response.content}"
+        return f"{response.status_code} : {response.content}"
