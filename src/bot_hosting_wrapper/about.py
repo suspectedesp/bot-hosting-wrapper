@@ -202,126 +202,125 @@ class Server:
 
         response_list = requests.get(url_list, headers=self._headers, timeout=6)
 
-        if response_list.status_code == 200:
-
-            url_details = f"{urls['servers']}{selected_server_id}"
-
-            response_details = requests.get(url_details, headers=self._headers, timeout=6)
-
-            if response_details.status_code == 200:
-                data = response_details.json()
-
-                identifier = data.get("identifier")
-                suspended = data.get("suspended")
-                name = data.get("name")
-                coins_per_month = data.get("plan", {}).get("coinsPerMonth")
-                storage = data.get("plan", {}).get("storage")
-                ram = data.get("plan", {}).get("ram")
-                cpu = data.get("plan", {}).get("cpu")
-
-                next_renewal = data.get("nextRenewal")
-
-                if next_renewal is not None:
-                    renewal_date_first = next_renewal
-                    renewal_numeric = int(''.join(c for c in renewal_date_first if c.isdigit()))
-                else:
-                    print(response_details.json())
-
-                if next_renewal is not None:
-                    unix_timestamp = renewal_numeric / 1000
-                    renewal_date = datetime.fromtimestamp(unix_timestamp, timezone.utc).strftime(
-                        '%Y-%m-%d %H:%M:%S UTC')
-
-                    if everything:
-                        server_info = {
-                            "Identifier": identifier,
-                            "Server ID": selected_server_id,
-                            "Is suspended?": suspended,
-                            "Server Name": name,
-                            "Coins per month": coins_per_month,
-                            "Storage": f"{storage} MB",
-                            "Ram": f"{ram} MB",
-                            "CPU": f"{cpu}%",
-                            "Next Renewal": renewal_date
-                        }
-                        return server_info
-                    else:
-                        if specific_info is None:
-                            return print(
-                                "Error! Specific Info cannot be None while all is False | Function used: get_info")
-                        else:
-                            if specific_info.lower() == "identifier":
-                                return identifier
-                            elif specific_info.lower() == "id":
-                                return selected_server_id
-                            elif specific_info.lower() == "suspended":
-                                return suspended
-                            elif specific_info.lower() == "name":
-                                return name
-                            elif specific_info.lower() == "coins/month":
-                                return coins_per_month
-                            elif specific_info.lower() == "storage":
-                                return f"{storage} MB"
-                            elif specific_info.lower() == "ram":
-                                return f"{ram} MB"
-                            elif specific_info.lower() == "cpu":
-                                return f"{cpu}%"
-                            elif specific_info.lower() == "nextrenewal":
-                                return renewal_date
-                            else:
-                                return print("Error! Invalid specific_info value provided.")
-                else:
-                    if everything:
-                        server_info = {
-                            "Identifier": identifier,
-                            "Server ID": selected_server_id,
-                            "Is suspended?": suspended,
-                            "Server Name": name,
-                            "Coins per month": coins_per_month,
-                            "Storage": f"{storage} MB",
-                            "Ram": f"{ram} MB",
-                            "CPU": f"{cpu}%",
-                            "Next Renewal": "NoneType Error"
-                        }
-                        return server_info
-                    else:
-                        if specific_info is None:
-                            return print(
-                                "Error! Specific Info cannot be None while all is False | Function used: get_info")
-                        else:
-                            if specific_info == "Identifier":
-                                return identifier
-                            elif specific_info == "Server ID":
-                                return selected_server_id
-                            elif specific_info == "Is suspended?":
-                                return suspended
-                            elif specific_info == "Server Name":
-                                return name
-                            elif specific_info == "Coins per month":
-                                return coins_per_month
-                            elif specific_info == "Storage":
-                                return f"{storage} MB"
-                            elif specific_info == "Ram":
-                                return f"{ram} MB"
-                            elif specific_info == "CPU":
-                                return f"{cpu}%"
-                            elif specific_info == "Next Renewal":
-                                if next_renewal is not None:
-                                    unix_timestamp = renewal_numeric / 1000
-                                    renewal_date = datetime.fromtimestamp(unix_timestamp, timezone.utc).strftime(
-                                        '%Y-%m-%d %H:%M:%S UTC')
-                                else:
-                                    renewal_date = "Error Getting Renewal Date: Renewal Date = None"
-                                return renewal_date
-                            else:
-                                return print("Error! Invalid specific_info value provided.")
-            else:
-                print(f"Error: {response_details.status_code}")
-                print(response_details.text)
-
-        else:
+        if response_list.status_code != 200:
             print(f"Error: {response_list.status_code}")
             print(response_list.text)
+            return None
+
+        url_details = f"{urls['servers']}{selected_server_id}"
+
+        response_details = requests.get(url_details, headers=self._headers, timeout=6)
+
+        if response_details.status_code != 200:
+            print(f"Error: {response_details.status_code}")
+            print(response_details.text)
+            return None
+        
+        data = response_details.json()
+
+        identifier = data.get("identifier")
+        suspended = data.get("suspended")
+        name = data.get("name")
+        coins_per_month = data.get("plan", {}).get("coinsPerMonth")
+        storage = data.get("plan", {}).get("storage")
+        ram = data.get("plan", {}).get("ram")
+        cpu = data.get("plan", {}).get("cpu")
+        next_renewal = data.get("nextRenewal")
+
+        if next_renewal is not None:
+            renewal_date_first = next_renewal
+            renewal_numeric = int(''.join(c for c in renewal_date_first if c.isdigit()))
+        else:
+            print(response_details.json())
+
+        if next_renewal is not None:
+            unix_timestamp = renewal_numeric / 1000
+            renewal_date = datetime.fromtimestamp(unix_timestamp, timezone.utc).strftime(
+                '%Y-%m-%d %H:%M:%S UTC')
+
+            if everything:
+                server_info = {
+                    "Identifier": identifier,
+                    "Server ID": selected_server_id,
+                    "Is suspended?": suspended,
+                    "Server Name": name,
+                    "Coins per month": coins_per_month,
+                    "Storage": f"{storage} MB",
+                    "Ram": f"{ram} MB",
+                    "CPU": f"{cpu}%",
+                    "Next Renewal": renewal_date
+                }
+                return server_info
+            else:
+                if specific_info is None:
+                    return print(
+                        "Error! Specific Info cannot be None while all is False | Function used: get_info")
+                else:
+                    if specific_info.lower() == "identifier":
+                        return identifier
+                    elif specific_info.lower() == "id":
+                        return selected_server_id
+                    elif specific_info.lower() == "suspended":
+                        return suspended
+                    elif specific_info.lower() == "name":
+                        return name
+                    elif specific_info.lower() == "coins/month":
+                        return coins_per_month
+                    elif specific_info.lower() == "storage":
+                        return f"{storage} MB"
+                    elif specific_info.lower() == "ram":
+                        return f"{ram} MB"
+                    elif specific_info.lower() == "cpu":
+                        return f"{cpu}%"
+                    elif specific_info.lower() == "nextrenewal":
+                        return renewal_date
+                    else:
+                        return print("Error! Invalid specific_info value provided.")
+        else:
+            if everything:
+                server_info = {
+                    "Identifier": identifier,
+                    "Server ID": selected_server_id,
+                    "Is suspended?": suspended,
+                    "Server Name": name,
+                    "Coins per month": coins_per_month,
+                    "Storage": f"{storage} MB",
+                    "Ram": f"{ram} MB",
+                    "CPU": f"{cpu}%",
+                    "Next Renewal": "NoneType Error"
+                }
+                return server_info
+            else:
+                if specific_info is None:
+                    return print(
+                        "Error! Specific Info cannot be None while all is False | Function used: get_info")
+                else:
+                    if specific_info == "Identifier":
+                        return identifier
+                    elif specific_info == "Server ID":
+                        return selected_server_id
+                    elif specific_info == "Is suspended?":
+                        return suspended
+                    elif specific_info == "Server Name":
+                        return name
+                    elif specific_info == "Coins per month":
+                        return coins_per_month
+                    elif specific_info == "Storage":
+                        return f"{storage} MB"
+                    elif specific_info == "Ram":
+                        return f"{ram} MB"
+                    elif specific_info == "CPU":
+                        return f"{cpu}%"
+                    elif specific_info == "Next Renewal":
+                        if next_renewal is not None:
+                            unix_timestamp = renewal_numeric / 1000
+                            renewal_date = datetime.fromtimestamp(unix_timestamp, timezone.utc).strftime(
+                                '%Y-%m-%d %H:%M:%S UTC')
+                        else:
+                            renewal_date = "Error Getting Renewal Date: Renewal Date = None"
+                        return renewal_date
+                    else:
+                        return print("Error! Invalid specific_info value provided.")
 
     def show(self):
         """
