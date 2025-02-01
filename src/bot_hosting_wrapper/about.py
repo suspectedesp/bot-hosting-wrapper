@@ -41,18 +41,22 @@ console.log('Your Auth ID:', token);
 
     def coins_amount(self):
         """
-        Will show you the total amount of your coins
+        Will show you the total amount of your coins.
+        Returns:
+            The coin amount
+            or a dictionary with an error message and status code if the request failed. {Error, Message}
         """
         url = "https://bot-hosting.net/api/me"
 
-        response = requests.get(url, headers=self._headers, timeout=6)
-
-        if response.status_code == 200:
-            coins_amount = response.json().get('coins')
-            return coins_amount
-        else:
-            print(f"Error: {response.status_code}")
-            print(response.text)
+        try:
+            response = requests.get(url, headers=self._headers, timeout=6)
+            if response.status_code == 200:
+                coins_amount = response.json().get('coins', None)  # defaulting to 0 if 'coins' key is missing
+                return coins_amount
+            else:
+                return {"Error": f"Received status code {response.status_code} from API.", "Message": response.text}
+        except requests.exceptions.RequestException as e:
+            return f"Request failed: {e}"
 
     def affiliate_data(self):
         """
@@ -71,7 +75,8 @@ console.log('Your Auth ID:', token);
 
     def about(self):
         """
-        Will give you a quick overview over your account
+        Will give you a quick overview of your account.
+        Returns a dictionary with account details or an 'error' message if something goes wrong.
         """
         url = "https://bot-hosting.net/api/me"
 
@@ -80,38 +85,42 @@ console.log('Your Auth ID:', token);
         if response.status_code == 200:
             try:
                 user_info = response.json()
-                print("Sent Request!")
-                print("Username: ", user_info['username'], " | ID: ", user_info['id'])
-                print("Current coins amount:", user_info['coins'])
-                print("Avatar:", user_info['avatar'])
-            except Exception as e:
-                print(f"Error parsing response JSON: {e}")
-                print("auth_id invalid")
+                return {
+                    "username": user_info.get('username', 'Unknown'),
+                    "id": user_info.get('id', 'Unknown'),
+                    "coins": user_info.get('coins', 'Unknown'),
+                    "avatar": user_info.get('avatar', 'No Avatar')
+                }
+            except ValueError as e:
+                return {"error": f"Error parsing response JSON: {e}"}
         else:
-            print(f"Error: {response.status_code}")
-            print(response.text)
+            return {"error": f"Received status code {response.status_code} from API: {response.text}"}
 
-    def id_check(self, about=None):
+    def id_check(self, about=False):
         """
-        Checks if your Auth ID is valid
+        Checks if your Auth ID is valid.
+        Params:
+        about (bool): If True, print user info in the console. Default is False.
         """
         url = "https://bot-hosting.net/api/me"
+        success = False
+        try:
+            response = requests.get(url, headers=self._headers, timeout=6)
+            if response.status_code == 200:
+                try:
+                    success = True
+                    user_info = response.json()
 
-        response = requests.get(url, headers=self._headers, timeout=6)
-
-        if response.status_code == 200:
-            try:
-                user_info = response.json()
-                if about is not None:
+                    # print user info if requested
                     if about:
-                        print("Username: ", user_info['username'], " | ID: ", user_info['id'])
-                return "Auth ID is valid."
-            except Exception as e:
-                print(f"Error parsing response JSON: {e}")
-                print("Auth ID is most likely invalid.")
-        else:
-            print("Auth_id is not valid. Please check your authentication credentials.")
-
+                        print("Username:", user_info.get('username', 'Unknown'), "| ID:", user_info.get('id', 'Unknown'))
+                except ValueError as e:
+                    return "Error parsing response. Auth ID is most likely invalid: {e}"
+            return {"Success": success, "Status Code": response.status_code}
+        
+        except requests.exceptions.RequestException as e:
+            return "Failed to contact the API. Please check your internet connection or the API URL: {e}"
+        
     def sftp_pass(self):
         """
         This will generate a new SFTP password
@@ -132,8 +141,7 @@ console.log('Your Auth ID:', token);
                 "timeLeft": data["timeLeft"]
             }
         else:
-            print(f"Error: {response.status_code}")
-            print(response.text)
+            return {"Status-Code": f"{response.status_code} from API.", "Message": response.text}
 
 
 
@@ -276,13 +284,11 @@ class Server:
         response = requests.get(url, headers=self._headers, timeout=6)
 
         if response.status_code == 200:
-            print("Request successful!")
             response = response.json()
             return response
             # TODO: check if it works correctly
         else:
-            print(f"Error: {response.status_code}")
-            print(response.text)
+            return {"error": response.status_code, "message": response.text}
 
     def delete(self, server_id=None):
         """
