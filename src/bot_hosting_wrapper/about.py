@@ -147,180 +147,125 @@ class Server:
 
     def change_language(self, language=None, server_id: str = None):
         """
-        Gets all your servers, lets you select 1, after that you select a language, and it'll change the server to that
+        Changes the programming language of a specified server.
+
+        Params:
+            language (str, required): The programming language to switch to (java, python, nodejs, lua, deno, nodemon).
+            server_id (str, required): The server ID.
+
+        Returns:
+            dict: Success or error message.
+        """
+        if not server_id:
+            return {"error": True, "message": "Error at change_language: You must enter a server ID!"}
+
+        if not language:
+            return {"error": True, "message": "Error at change_language: You must enter a programming language!"}
+
+        language_to_egg = {
+            "nodejs": 16,
+            "python": 17,
+            "java": 18,
+            "deno": 19,
+            "nodemon": 20,
+            "lua": 21
+        }
+
+        # corresponding id
+        egg = language_to_egg.get(language.lower())
+
+        if egg is None:
+            return {"error": True, "message": f"Invalid programming language: {language}. Supported: {', '.join(language_to_egg.keys())}"}
+
+        # constructing api request
+        change_software_url = "https://bot-hosting.net/api/servers/changeSoftware"
+        payload_change_software = {
+            "id": server_id,
+            "egg": str(egg)
+        }
+
+        response = requests.post(change_software_url, headers=self._headers, json=payload_change_software, timeout=6)
+
+        if response.status_code == 200:
+            return {"success": True, "message": "Software change request successful!"}
+        else:
+            return {"error": True, "status_code": response.status_code, "message": response.text}
+
+    def get_info(self, specific_info=None, everything=False, selected_server_id: str = None) -> dict | str:
+        """
+        Fetches details about a selected server.
+        Params:
+            specific_info (str, optional): The specific info to retrieve (e.g., "cpu", "ram").
+            everything (bool, optional): Whether to return all server info.
+            selected_server_id (str, optional): The server ID to query.
+
+        Returns:
+            dict or str: A dictionary with server info if everything=True, or a specific info string.
+                         Returns a dictionary with an error message in case of failure.
         """
         url_list = "https://bot-hosting.net/api/servers"
 
         response_list = requests.get(url_list, headers=self._headers, timeout=6)
-
-        if response_list.status_code == 200:
-
-            if server_id is None:
-                return print("Error at change_language: You must enter a server ID!")
-
-            if language is None:
-                # (java, python, nodejs, lua, deno, nodemon)
-                return print("Error at change_language: You must enter a programming language!")
-
-            else:
-                programming_language = language
-                language_to_egg = {
-                    "nodejs": 16,
-                    "python": 17,
-                    "java": 18,
-                    "deno": 19,
-                    "nodemon": 20,
-                    "lua": 21
-                }
-
-            egg = language_to_egg.get(programming_language.lower(), "Unknown Language")
-            # f"Selected server ID: {selected_server_id}, Programming Language: {programming_language}, Egg: {egg}"
-            change_software_url = f"{urls['servers']}/changeSoftware"
-            payload_change_software = {
-                "id": server_id,
-                "egg": str(egg)
-            }
-
-            response_change_software = requests.post(change_software_url, headers=self._headers,
-                                                     json=payload_change_software, timeout=6)
-
-            if response_change_software.status_code == 200:
-                return "Software change request successful!"
-            else:
-                print(f"Failed to change software. Status code: {response_change_software.status_code}")
-                print(response_change_software.text)
-
-    def get_info(self, specific_info=None, everything=None, selected_server_id: str = None):
-        """
-        First gets all your servers, then you can select a certain one, and it shows you the specific info about it\n
-        Such as: Renewal, Identifier, Server ID, if its suspended, etc.\n
-        Example Usage of Params: specific_info="cpu" or all=True\n
-        specific info can either be name | id | identifier | coins/month | suspended | ram | storage | cpu | nextrenewal
-        """
-        renewal_numeric = None
-        url_list = "https://bot-hosting.net/api/servers"
-
-        response_list = requests.get(url_list, headers=self._headers, timeout=6)
-
         if response_list.status_code != 200:
-            print(f"Error: {response_list.status_code}")
-            print(response_list.text)
-            return None
+            return {"error": True, "status_code": response_list.status_code, "message": response_list.text}
 
-        url_details = f"{urls['servers']}{selected_server_id}"
+        if not selected_server_id:
+            return {"error": True, "message": "Error! No server ID provided."}
 
+        url_details = f"https://bot-hosting.net/api/servers/{selected_server_id}"
         response_details = requests.get(url_details, headers=self._headers, timeout=6)
 
         if response_details.status_code != 200:
-            print(f"Error: {response_details.status_code}")
-            print(response_details.text)
-            return None
-        
+            return {"error": True, "status_code": response_details.status_code, "message": response_details.text}
+
         data = response_details.json()
 
-        identifier = data.get("identifier")
-        suspended = data.get("suspended")
-        name = data.get("name")
-        coins_per_month = data.get("plan", {}).get("coinsPerMonth")
-        storage = data.get("plan", {}).get("storage")
-        ram = data.get("plan", {}).get("ram")
-        cpu = data.get("plan", {}).get("cpu")
+        server_info = {
+            "Identifier": data.get("identifier"),
+            "Server ID": selected_server_id,
+            "Is suspended?": data.get("suspended"),
+            "Server Name": data.get("name"),
+            "Coins per month": data.get("plan", {}).get("coinsPerMonth"),
+            "Storage": f"{data.get('plan', {}).get('storage', 'Unknown')} MB",
+            "Ram": f"{data.get('plan', {}).get('ram', 'Unknown')} MB",
+            "CPU": f"{data.get('plan', {}).get('cpu', 'Unknown')}%",
+            "Next Renewal": "Unknown"
+        }
+
         next_renewal = data.get("nextRenewal")
+        if next_renewal:
+            try:
+                renewal_numeric = int(''.join(c for c in next_renewal if c.isdigit()))
+                unix_timestamp = renewal_numeric / 1000
+                server_info["Next Renewal"] = datetime.fromtimestamp(unix_timestamp, timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')
+            except ValueError:
+                server_info["Next Renewal"] = "Error: Invalid renewal date format"
 
-        if next_renewal is not None:
-            renewal_date_first = next_renewal
-            renewal_numeric = int(''.join(c for c in renewal_date_first if c.isdigit()))
-        else:
-            print(response_details.json())
+        # returning full server info if needed
+        if everything:
+            return server_info
 
-        if next_renewal is not None:
-            unix_timestamp = renewal_numeric / 1000
-            renewal_date = datetime.fromtimestamp(unix_timestamp, timezone.utc).strftime(
-                '%Y-%m-%d %H:%M:%S UTC')
+        # else returning specific info
+        if specific_info:
+            specific_info = specific_info.lower()
+            key_map = {
+                "identifier": "Identifier",
+                "id": "Server ID",
+                "suspended": "Is suspended?",
+                "name": "Server Name",
+                "coins/month": "Coins per month",
+                "storage": "Storage",
+                "ram": "Ram",
+                "cpu": "CPU",
+                "nextrenewal": "Next Renewal"
+            }
 
-            if everything:
-                server_info = {
-                    "Identifier": identifier,
-                    "Server ID": selected_server_id,
-                    "Is suspended?": suspended,
-                    "Server Name": name,
-                    "Coins per month": coins_per_month,
-                    "Storage": f"{storage} MB",
-                    "Ram": f"{ram} MB",
-                    "CPU": f"{cpu}%",
-                    "Next Renewal": renewal_date
-                }
-                return server_info
+            if specific_info in key_map:
+                return server_info[key_map[specific_info]]
             else:
-                if specific_info is None:
-                    return print(
-                        "Error! Specific Info cannot be None while all is False | Function used: get_info")
-                else:
-                    if specific_info.lower() == "identifier":
-                        return identifier
-                    elif specific_info.lower() == "id":
-                        return selected_server_id
-                    elif specific_info.lower() == "suspended":
-                        return suspended
-                    elif specific_info.lower() == "name":
-                        return name
-                    elif specific_info.lower() == "coins/month":
-                        return coins_per_month
-                    elif specific_info.lower() == "storage":
-                        return f"{storage} MB"
-                    elif specific_info.lower() == "ram":
-                        return f"{ram} MB"
-                    elif specific_info.lower() == "cpu":
-                        return f"{cpu}%"
-                    elif specific_info.lower() == "nextrenewal":
-                        return renewal_date
-                    else:
-                        return print("Error! Invalid specific_info value provided.")
-        else:
-            if everything:
-                server_info = {
-                    "Identifier": identifier,
-                    "Server ID": selected_server_id,
-                    "Is suspended?": suspended,
-                    "Server Name": name,
-                    "Coins per month": coins_per_month,
-                    "Storage": f"{storage} MB",
-                    "Ram": f"{ram} MB",
-                    "CPU": f"{cpu}%",
-                    "Next Renewal": "NoneType Error"
-                }
-                return server_info
-            else:
-                if specific_info is None:
-                    return print(
-                        "Error! Specific Info cannot be None while all is False | Function used: get_info")
-                else:
-                    if specific_info == "Identifier":
-                        return identifier
-                    elif specific_info == "Server ID":
-                        return selected_server_id
-                    elif specific_info == "Is suspended?":
-                        return suspended
-                    elif specific_info == "Server Name":
-                        return name
-                    elif specific_info == "Coins per month":
-                        return coins_per_month
-                    elif specific_info == "Storage":
-                        return f"{storage} MB"
-                    elif specific_info == "Ram":
-                        return f"{ram} MB"
-                    elif specific_info == "CPU":
-                        return f"{cpu}%"
-                    elif specific_info == "Next Renewal":
-                        if next_renewal is not None:
-                            unix_timestamp = renewal_numeric / 1000
-                            renewal_date = datetime.fromtimestamp(unix_timestamp, timezone.utc).strftime(
-                                '%Y-%m-%d %H:%M:%S UTC')
-                        else:
-                            renewal_date = "Error Getting Renewal Date: Renewal Date = None"
-                        return renewal_date
-                    else:
-                        return print("Error! Invalid specific_info value provided.")
+                return {"error": True, "message": f"Error! Invalid specific_info value: {specific_info}"}
+
+        return {"error": True, "message": "Error! specific_info cannot be None when everything=False"}
 
     def show(self):
         """
