@@ -1,4 +1,3 @@
-```python
 import bot_hosting_wrapper
 from bot_hosting_wrapper import Account, Server, Interactive, Panel
 
@@ -7,6 +6,7 @@ def main() -> None:
     auth_id = input("Enter your auth id: ")
     acc = Account(auth_id)
     serv = Server(auth_id)
+    server_id = 123
     panel = Panel(auth_id, server_id) # server_id is optional
     #interactive includes console/input required stuff like the old version did
     interactive = Interactive(auth_id)
@@ -21,6 +21,18 @@ def main() -> None:
     # Get specific information about a server (example: next renewal date)
     server_info = serv.get_info(everything=False, specific_info="nextrenewal", selected_server_id="serverid")
     print(server_info)
+    
+    info = Server.get_info(everything=True, selected_server_id="12345")
+    print(info)
+
+    # Get only the server's CPU usage
+    cpu = Server.get_info(specific_info="cpu", selected_server_id="12345")
+    print(cpu)
+
+    # Handle errors properly
+    response = Server.get_info(specific_info="invalid_key", selected_server_id="12345")
+    if "error" in response:
+        print(f"Error: {response['message']}")
     # Get current coins amount
     acc.coins_amount()
     # Get account overview
@@ -39,4 +51,3 @@ def main() -> None:
     print("Link:", affiliate_data.link)
     print("Number of uses:", affiliate_data.uses)
 main()
-```
