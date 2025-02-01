@@ -4,10 +4,11 @@ from bot_hosting_wrapper import Account, Server, Interactive, Panel
 def main() -> None:
     bot_hosting_wrapper.LOGGING_ENABLED = False
     auth_id = input("Enter your auth id: ")
+    api_key = input("Enter your API key for Panel: ") # https://control.bot-hosting.net/account/api
     acc = Account(auth_id)
     serv = Server(auth_id)
     server_id = 123
-    panel = Panel(auth_id, server_id) # server_id is optional
+    panel = Panel(api_key, server_id) # server_id is optional 
     #interactive includes console/input required stuff like the old version did
     interactive = Interactive(auth_id)
     interactive.get_info()

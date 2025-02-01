@@ -14,7 +14,8 @@ class Panel:
             "server_list": f"https://control.bot-hosting.net/api/client?page={self.page}",
             "permission_check": "https://control.bot-hosting.net/api/client/permissions",
             "account_check": "https://control.bot-hosting.net/api/client/account",
-            "2fa": "https://control.bot-hosting.net/api/two-factor"
+            "2fa": "https://control.bot-hosting.net/api/two-factor",
+            "server_resources": f"https://control.bot-hosting.net/api/client/servers"
         }
 
     def get_serverlist(self, page=1):
@@ -216,3 +217,61 @@ class Panel:
         elif response.status_code == 400:
             return f"BadRequestHttpException: {response.content}"
         return f"{response.status_code} : {response.content}"
+    
+    def get_server_resources(self, server_id):
+        """
+        Retrieves the current resource usage of a specified server.
+
+        Parameters:
+        server_id (str): The unique identifier of the server. If not provided, the server_id attribute of the Panel instance will be used.
+
+        Returns:
+        dict: A dictionary containing the formatted resource usage information. If an error occurs, it returns a dictionary with an "Error" key set to True.
+
+        The returned dictionary has the following structure:
+        {
+            "Memory MB": "Memory usage GB",
+            "Memory GB": "Memory usage in MB",
+            "Network Inbound": "Inbound network traffic in MB",
+            "Network Outbound": "Outbound network traffic in MB",
+            "Disk Usage MB": "Disk usage in MB",
+            "Disk GB": "Disk usage in GB"
+        }
+        Every value inside of the dictionary is currently a string
+        """
+        if self.server_id is None and server_id is None:
+            return "No server ID provided!"
+
+        headers = {
+            "Accept": "application/json",
+            'Content-Type': 'application/json',
+            "Authorization": f"Bearer {self.api_key}"
+        }
+
+        response = requests.get(url=f"{self.urls['server_resources']}/{server_id}/resources", headers=headers, timeout=6)
+
+        if response.status_code != 200:
+            return {"Error": True, "status_code": f"{response.status_code}", "message": response.content}
+
+        data = json.loads(response.text)
+        resources = data['attributes']['resources']
+
+        # converting bytes to MB/GB
+        memory_mb = resources['memory_bytes'] / (1024 * 1024)
+        memory_gb = memory_mb / 1024
+        network_rx_mb = resources['network_rx_bytes'] / (1024 * 1024)
+        network_tx_mb = resources['network_tx_bytes'] / (1024 * 1024)
+        disk_mb = resources['disk_bytes'] / (1024 * 1024)
+        disk_gb = disk_mb / 1024
+
+        # dict with formatted resource usage
+        resource_usage = {
+            "Memory MB": f"{memory_mb:.2f}",
+            "Memory GB": f"{memory_gb:.2f}",
+            "Network Inbound": f"{network_rx_mb:.2f}",
+            "Network Outbound": f"{network_tx_mb:.2f}",
+            "Disk Usage MB": f"{disk_mb:.2f}",
+            "Disk Usage GB": f"{disk_gb:.2f}"
+        }
+
+        return resource_usage
