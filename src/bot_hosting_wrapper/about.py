@@ -4,6 +4,8 @@ import webbrowser
 from colorama import Fore
 from datetime import datetime, timezone
 
+from typing import Any
+
 
 urls = {
     "servers": "https://bot-hosting.net/api/servers/",
@@ -22,8 +24,11 @@ class Account:
         }
 
     @staticmethod
-    def get_auth_id():
-        """A quick instruction on how to get the auth id
+    def get_auth_id() -> None:
+        """
+        Prints a quick instruction on how to get the auth id
+        Returns:
+            None
         """
         print(Fore.WHITE + "Please follow the instructions to get your auth id.")
         print("1. Open your browser's console (usually by pressing F12 or pressing Control + Shift + I)")
@@ -39,9 +44,9 @@ console.log('Your Auth ID:', token);
         webbrowser.open(link_to_open)
         return
 
-    def coins_amount(self):
+    def coins_amount(self) -> (Any | dict[str, str] | str):
         """
-        Will show you the total amount of your coins.
+        Gets the total amount of your coins.
         Returns:
             The coin amount
             or a dictionary with an error message and status code if the request failed. {Error, Message}
@@ -58,19 +63,25 @@ console.log('Your Auth ID:', token);
         except requests.exceptions.RequestException as e:
             return f"Request failed: {e}"
 
-    def affiliate_data(self):
+    def affiliate_data(self)-> (dict[str, Any] | str):
         """
-        Return your affiliate data (coins/referral, uses and your link)
+        Returns affiliate data (coins/referral, uses and your link)
+        Returns:
+            If status code is 200 and no error occurs: 
         """
+        try:
+            data = requests.get(urls["affiliate"], headers=self._headers, timeout=6).json()
+            if data.status_code != 200:
+                return {"Error": f"Received status code {data.status_code} from API.", "Message": data.text}
+        except requests.exceptions.RequestException as e:
+            return f"Request failed: {e}"
 
-        data = requests.get(urls["affiliate"], headers=self._headers, timeout=6).json()
-
-        class AffiliateData:
-            coinsPerReferral = data["coinsPerReferral"]
-            enabled = data["enabled"]
-            link = data["link"]
-            uses = data["uses"]
-
+        AffiliateData = {
+            "coinsPerReferral": data["coinsPerReferral"],
+            "enabled": data["enabled"],
+            "link": data["link"],
+            "uses": data["uses"],
+        }
         return AffiliateData
 
     def about(self):
