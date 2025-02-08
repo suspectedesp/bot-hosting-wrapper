@@ -33,7 +33,7 @@ Please follow the instructions to get your auth id:
 var token = localStorage.getItem('token');
 console.log('Your Auth ID:', token);
 ```
-Now you got your Auth ID and can use all the scripts, congrats!
+Now you got your Auth ID and can use the module, congrats!
 
 For an usage of the commands etc. please go [to this page](https://github.com/suspectedesp/bot-hosting-wrapper/wiki/Coding-Usage)
 
