@@ -17,6 +17,11 @@ urls = {
 
 class Account:
     def __init__(self, auth_id):
+        """
+        Initializes an Account object with the given auth id.
+        Args:
+            auth_id (str): The auth id of the account.
+        """
         self.auth_id = auth_id
         self._headers = {
             "Authorization": self.auth_id,

@@ -6,6 +6,11 @@ from os import name as os_name, system
 
 class Interactive:
     def __init__(self, auth_id):
+        """
+        Initializes the interactive Class
+        Args:
+            auth_id (str): The auth id of the account.
+        """
         self.auth_id = auth_id
         self._headers = {
             "Authorization": self.auth_id,

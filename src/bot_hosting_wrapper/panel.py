@@ -7,6 +7,12 @@ import requests
 # max usage: 240 requests per minute
 class Panel:
     def __init__(self, api_key, server_id=None):
+        """
+        Initialize Panel class.
+        Args:
+            api_key (str): Bot-Hosting.net API key (https://control.bot-hosting.net/account/api)
+            server_id (str): Optional, server ID for which to retrieve resources. Defaults to None.
+        """
         self.api_key = api_key
         self.server_id = server_id
         self.page = None
