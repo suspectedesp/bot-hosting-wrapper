@@ -1,3 +1,5 @@
+# THIS MAY OR MAY NOT BE UP-TO-DATE, SORRY ~ suspectedesp
+
 import bot_hosting_wrapper
 from bot_hosting_wrapper import Account, Server, Interactive, Panel
 

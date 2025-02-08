@@ -44,7 +44,7 @@ Latest Changelog:
 ## License
 MIT License
 
-Copyright (c) 2024-2025 Bubblegum
+Copyright (c) 2024-2025 @suspectedesp on Github
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -76,7 +76,6 @@ SOFTWARE.
 Many thanks to:
 - @mathiasDPX for giving me some ideas and remaking the code
 - @pondwader for letting me upload this
-- @iamkubi api wrapper for pterodactyl panel
 - @Aidan-The-Dev for the useful PR
 
 Many thanks guys! I appreciate it <3
