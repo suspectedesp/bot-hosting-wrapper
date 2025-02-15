@@ -21,7 +21,7 @@ Steps to reproduce the behavior:
 A clear and concise description of what you expected to happen.
 
 **Screenshots**
-If applicable, add screenshots to help explain your problem.
+Add screenshots of the bug/error if applicable to help explain your problem.
 
 **Additional context**
-Add any other context about the problem here.
+Please feel free to add any other context about the problem here.
