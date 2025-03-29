@@ -1,2 +1,40 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Enforce LF line endings for Python files (avoid Windows CRLF issues)
+*.py text eol=lf
+
+# Use Git’s built-in Python diff for better readability
+*.py diff=python
+
+# Prevent execution permission issues on Unix-like systems
+*.py eol=lf text
+
+# Mark compiled Python files and package files as binary (prevents diffing)
+*.pyc binary
+*.pyo binary
+*.pyd binary
+*.so binary
+*.dll binary
+*.dylib binary
+*.whl binary
+*.egg binary
+*.pdb binary
+
+# Handle Jupyter notebooks as binary (avoid diff conflicts)
+*.ipynb binary
+
+# Prevent merge conflicts in requirements and environment files
+requirements.txt merge=union
+Pipfile.lock merge=union
+
+# Enforce Unix line endings for shell scripts (if used in automation)
+*.sh text eol=lf
+
+# Ignore virtual environment binaries and cache files
+venv/** binary
+__pycache__/** binary
+
+# If using Git LFS for large models/datasets, uncomment and add relevant extensions
+# *.h5 filter=lfs diff=lfs merge=lfs
+# *.csv filter=lfs diff=lfs merge=lfs
