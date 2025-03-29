@@ -1,5 +1,7 @@
 # Bot Hosting Wrapper
-A simple yet powerful Python wrapper for bot-hosting.net's API
+[![PyPI Downloads](https://static.pepy.tech/badge/bot-hosting-wrapper)](https://pepy.tech/projects/bot-hosting-wrapper)
+
+A simple yet powerful Python wrapper for bot-hosting.net's API 
 
 # 🚀Information
 As of 20/01/2025, this library can only be used from bot-hosting.net's nodes. If you try to access it from elsewhere, Cloudflare will block your request with a 403 error.
