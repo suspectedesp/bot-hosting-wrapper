@@ -18,8 +18,8 @@ dependencies = [
 ]
 
 [project.urls]
-Repository = "https://github.com/suspectedesp/bot-hosting-wrapper/"
-Bot-Hosting = "https://bot-hosting.net/"
+Github Repository = "https://github.com/suspectedesp/bot-hosting-wrapper/"
+Bot-Hosting Website = "https://bot-hosting.net/"
 
 [build-system]
 requires = ["setuptools>=61.0"]

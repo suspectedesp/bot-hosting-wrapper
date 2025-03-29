@@ -151,7 +151,7 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-# Bot-hositng-wrapper specific template
+# Bot-hosting-wrapper specific template
 bot-hosting-wrapper.code-workspace
 tests/
 testing/
