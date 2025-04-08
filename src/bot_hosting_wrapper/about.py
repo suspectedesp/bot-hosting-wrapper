@@ -1,5 +1,4 @@
 import requests
-import webbrowser
 
 from colorama import Fore
 from datetime import datetime, timezone
@@ -11,9 +10,14 @@ urls = {
     "servers": "https://bot-hosting.net/api/servers/",
     "affiliate": "https://bot-hosting.net/api/affiliate",
     "newPassword": "https://bot-hosting.net/api/newPassword",
-    "freeCoinsStatus": "https://bot-hosting.net/api/freeCoinsStatus"
+    "freeCoinsStatus": "https://bot-hosting.net/api/freeCoinsStatus",
+    "me": "https://bot-hosting.net/api/me"
 }
 
+server_urls = {
+    "delete": "https://bot-hosting.net/api/servers/delete",
+    "changeSoftware": "https://bot-hosting.net/api/servers/changeSoftware",
+}
 
 class Account:
     def __init__(self, auth_id):
@@ -28,27 +32,6 @@ class Account:
             "content-type": "application/json"
         }
 
-    @staticmethod
-    def get_auth_id() -> None:
-        """
-        Prints a quick instruction on how to get the auth id
-        Returns:
-            None
-        """
-        print(Fore.WHITE + "Please follow the instructions to get your auth id.")
-        print("1. Open your browser's console (usually by pressing F12 or pressing Control + Shift + I)")
-        print("2. Navigate to the 'Console' tab")
-        print("3. Paste in the following code:")
-        print(Fore.CYAN + """var token = localStorage.getItem('token');
-console.log('Your Auth ID:', token);
-          """)
-        print(Fore.WHITE + "Now you got your Auth ID and can use all the scripts, congrats!")
-
-        input("Pressing Enter will open the link where you can do all that :)")
-        link_to_open = "https://bot-hosting.net/panel/"
-        webbrowser.open(link_to_open)
-        return
-
     def coins_amount(self) -> (Any | dict[str, str] | str):
         """
         Gets the total amount of your coins.
@@ -56,10 +39,9 @@ console.log('Your Auth ID:', token);
             The coin amount
             or a dictionary with an error message and status code if the request failed. {Error, Message}
         """
-        url = "https://bot-hosting.net/api/me"
 
         try:
-            response = requests.get(url, headers=self._headers, timeout=6)
+            response = requests.get(urls["me"], headers=self._headers, timeout=6)
             if response.status_code == 200:
                 coins_amount = response.json().get('coins', None)  # defaulting to 0 if 'coins' key is missing
                 return coins_amount
@@ -94,9 +76,8 @@ console.log('Your Auth ID:', token);
         Will give you a quick overview of your account.
         Returns a dictionary with account details or an 'error' message if something goes wrong.
         """
-        url = "https://bot-hosting.net/api/me"
 
-        response = requests.get(url, headers=self._headers, timeout=6)
+        response = requests.get(urls["me"], headers=self._headers, timeout=6)
 
         if response.status_code == 200:
             try:
@@ -118,10 +99,9 @@ console.log('Your Auth ID:', token);
         Params:
         about (bool): If True, print user info in the console. Default is False.
         """
-        url = "https://bot-hosting.net/api/me"
         success = False
         try:
-            response = requests.get(url, headers=self._headers, timeout=6)
+            response = requests.get(urls["me"], headers=self._headers, timeout=6)
             if response.status_code == 200:
                 try:
                     success = True
@@ -202,13 +182,12 @@ class Server:
             return {"error": True, "message": f"Invalid programming language: {language}. Supported: {', '.join(language_to_egg.keys())}"}
 
         # constructing api request
-        change_software_url = "https://bot-hosting.net/api/servers/changeSoftware"
         payload_change_software = {
             "id": server_id,
             "egg": str(egg)
         }
 
-        response = requests.post(change_software_url, headers=self._headers, json=payload_change_software, timeout=6)
+        response = requests.post(server_urls["changeSoftware"], headers=self._headers, json=payload_change_software, timeout=6)
 
         if response.status_code == 200:
             return {"success": True, "message": "Software change request successful!"}
@@ -227,17 +206,15 @@ class Server:
             dict or str: A dictionary with server info if everything=True, or a specific info string.
                          Returns a dictionary with an error message in case of failure.
         """
-        url_list = "https://bot-hosting.net/api/servers"
 
-        response_list = requests.get(url_list, headers=self._headers, timeout=6)
+        response_list = requests.get(urls["servers"], headers=self._headers, timeout=6)
         if response_list.status_code != 200:
             return {"error": True, "status_code": response_list.status_code, "message": response_list.text}
 
         if not selected_server_id:
             return {"error": True, "message": "Error! No server ID provided."}
 
-        url_details = f"https://bot-hosting.net/api/servers/{selected_server_id}"
-        response_details = requests.get(url_details, headers=self._headers, timeout=6)
+        response_details = requests.get(f"{urls['servers']}{selected_server_id}", headers=self._headers, timeout=6)
 
         if response_details.status_code != 200:
             return {"error": True, "status_code": response_details.status_code, "message": response_details.text}
@@ -295,9 +272,8 @@ class Server:
         """
         Shows all your servers
         """
-        url = "https://bot-hosting.net/api/servers"
 
-        response = requests.get(url, headers=self._headers, timeout=6)
+        response = requests.get(urls["servers"], headers=self._headers, timeout=6)
 
         if response.status_code == 200:
             response = response.json()
@@ -306,27 +282,18 @@ class Server:
         else:
             return {"error": response.status_code, "message": response.text}
 
-    def delete(self, server_id=None):
+    def delete(self, server_id: int):
         """
         This function gets all your server ids and on your request deletes a certain one (only with your confirmation)
         If server_id is provided, deletes that server directly; otherwise, prompts user for server selection.
         """
-        url_list = "https://bot-hosting.net/api/servers"
 
-        response_list = requests.get(url_list, headers=self._headers, timeout=6)
+        if server_id is None:
+            return "Value ServerID cannot be None"
 
-        if response_list.status_code == 200:
+        data = {
+            "id": int(server_id)
+        }
 
-            if server_id is None:
-                return "Value ServerID cannot be None"
-            else:
-                selected_server_id = str(server_id)
-
-            url_delete = "https://bot-hosting.net/api/servers/delete"
-
-            data = {
-                "id": int(selected_server_id)
-            }
-
-            r = requests.post(url_delete, json=data, headers=self._headers, timeout=6)
-            return r.content
+        r = requests.post(server_urls["delete"], json=data, headers=self._headers, timeout=6)
+        return r.content
