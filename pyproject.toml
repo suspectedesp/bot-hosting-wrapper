@@ -9,12 +9,13 @@ readme = "README.md"
 requires-python = ">=3.8"
 classifiers = [
     "Programming Language :: Python :: 3.10",
-    "License :: OSI Approved :: MIT License",
+    "License :: OSI Approved :: The Unlicense",
     "Operating System :: OS Independent",
 ]
 dependencies = [
     "requests>=2.26.0",
     "colorama>=0.4.4",
+    "aiohttp>=3.10.5",
 ]
 
 [project.urls]

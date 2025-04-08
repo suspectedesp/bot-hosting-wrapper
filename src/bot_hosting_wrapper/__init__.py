@@ -2,6 +2,7 @@
 from .about import *
 from .interactive import *
 from .panel import *
+from .vasync import *
 ############# bot-hosting-wrapper files
 import webbrowser
 
