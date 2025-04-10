@@ -54,7 +54,8 @@ class Account:
         """
         Returns affiliate data (coins/referral, uses and your link)
         Returns:
-            If status code is 200 and no error occurs: 
+            If status code is 200 and no error occurs: a dict containing {coinsPerReferral, enabled, link, uses}
+            If status code is not 200: an error dict containing {Error, Message}
         """
         try:
             data = requests.get(urls["affiliate"], headers=self._headers, timeout=6).json()
@@ -74,7 +75,8 @@ class Account:
     def about(self):
         """
         Will give you a quick overview of your account.
-        Returns a dictionary with account details or an 'error' message if something goes wrong.
+        Returns:
+            A dictionary with account details or an 'error' message if something goes wrong.
         """
 
         response = requests.get(urls["me"], headers=self._headers, timeout=6)
@@ -120,6 +122,8 @@ class Account:
     def sftp_pass(self):
         """
         This will generate a new SFTP password
+        Returns:
+            The new SFTP password
         """
         password = requests.post(urls["newPassword"], headers=self._headers, timeout=6).json()["password"]
         return password
@@ -127,6 +131,8 @@ class Account:
     def claimable(self):
         """
         Check if free coins are claimable and the time left
+        Returns:
+            A dict containing {claimable, timeLeft}
         """
         response = requests.get(urls["freeCoinsStatus"], headers=self._headers, timeout=6)
 
@@ -271,6 +277,9 @@ class Server:
     def show(self):
         """
         Shows all your servers
+        Returns:
+            The whole response parsed as a json dict
+            If response isn't 200, it returns an error dict
         """
 
         response = requests.get(urls["servers"], headers=self._headers, timeout=6)
@@ -285,7 +294,8 @@ class Server:
     def delete(self, server_id: int):
         """
         This function gets all your server ids and on your request deletes a certain one (only with your confirmation)
-        If server_id is provided, deletes that server directly; otherwise, prompts user for server selection.
+        Returns:
+            If server id provided: response content
         """
 
         if server_id is None:
