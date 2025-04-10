@@ -1,6 +1,6 @@
 [project]
 name = "bot_hosting_wrapper"
-version = "1.3"
+version = "1.4"
 authors = [
   { name="Bubblegum" },
 ]
@@ -9,7 +9,7 @@ readme = "README.md"
 requires-python = ">=3.8"
 classifiers = [
     "Programming Language :: Python :: 3.10",
-    "License :: OSI Approved :: The Unlicense",
+    "License :: Public Domain",
     "Operating System :: OS Independent",
 ]
 dependencies = [
@@ -19,8 +19,8 @@ dependencies = [
 ]
 
 [project.urls]
-Github Repository = "https://github.com/suspectedesp/bot-hosting-wrapper/"
-Bot-Hosting Website = "https://bot-hosting.net/"
+Repository = "https://github.com/suspectedesp/bot-hosting-wrapper/"
+Bot-Hosting = "https://bot-hosting.net/"
 
 [build-system]
 requires = ["setuptools>=61.0"]
