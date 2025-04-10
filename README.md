@@ -14,6 +14,7 @@ This is maintained by @suspectedesp on Github
 - [Installation](#installation)
 - [Usage](#usage)
 - [Change Log](#changelog)
+- [Wiki](#wiki)
 - [License](#license)
 - [Contribution](#contributing)
 - [Credits](#credits)
@@ -46,6 +47,9 @@ Your Auth ID will now be displayed in the console and can use the module, congra
 
 ## Changelog
 📢 Stay up to date with the latest changes! Find the latest release notes under the [Releases tab](https://github.com/suspectedesp/bot-hosting-wrapper/releases).
+
+## Wiki
+Need function documentation, known issues or coding usage? Check out the wiki under the [Wiki tab](https://github.com/suspectedesp/bot-hosting-wrapper/wiki)
 
 ## License
 The Unlicense
