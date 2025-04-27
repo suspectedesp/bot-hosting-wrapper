@@ -20,7 +20,7 @@ This is maintained by @suspectedesp on Github
 - [Credits](#credits)
 
 ## Installation
-Dependencies | Make sure you have the following installed (+ used version in development):
+Dependencies + used version in development:
 ```txt
 requests==2.31.0
 colorama==0.4.6
