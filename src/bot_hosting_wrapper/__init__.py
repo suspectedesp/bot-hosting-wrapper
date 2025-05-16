@@ -4,12 +4,14 @@ from .interactive import *
 from .panel import *
 from .vasync import *
 ############# bot-hosting-wrapper files
+import asyncio
 import webbrowser
 
 ############# Functions
 
-def get_auth_id() -> None:
+def get_auth_id_sync() -> None:
     """
+    Recently renamed from get_auth_id to get_auth_id_sync
     Prints a quick instruction on how to get the auth id
     Returns:
         None
@@ -27,3 +29,10 @@ console.log('Your Auth ID:', token);
     link_to_open = "https://bot-hosting.net/panel/"
     webbrowser.open(link_to_open)
     return
+
+async def get_auth_id_async():
+    """
+    Async version for get_auth_id_sync
+    """
+    loop = asyncio.get_running_loop()
+    await loop.run_in_executor(None, get_auth_id_sync)
