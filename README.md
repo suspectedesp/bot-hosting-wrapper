@@ -11,6 +11,7 @@ As of 20/01/2025, this library can only be used from bot-hosting.net's nodes. If
 This is maintained by @suspectedesp on Github
 
 ## Table of Contents
+*Note: This navigation may only work on [Github](https://github.com/suspectedesp/bot-hosting-wrapper/)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Change Log](#changelog)
